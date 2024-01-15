@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "939205999890",
+    "firebase_url": "https://calorie-counter-d4191-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "calorie-counter-d4191",
+    "storage_bucket": "calorie-counter-d4191.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939205999890:android:35a0493ac20856440687cb",
+        "android_client_info": {
+          "package_name": "com.example.calorie_counter_app_design"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA89rpL7ltieoO_BQXBKh8tLzKKlcTads"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

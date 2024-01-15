@@ -1,4 +1,5 @@
 import 'package:calorie_counter_app_design/dash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'diary.dart';
 
@@ -9,6 +10,7 @@ class TabBarViewMain extends StatefulWidget {
 }
 
 class _TabBarViewMainState extends State<TabBarViewMain> {
+
   int _currentIndex = 0;
   final List<String> tabTitle = ["Diary", "Dashboard"];
 

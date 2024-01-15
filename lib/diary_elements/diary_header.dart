@@ -8,8 +8,7 @@ class DiaryHeader extends StatelessWidget{
   DiaryHeader({required this.meal, required this.calorieValue});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
+      return Container(
         color: Colors.redAccent,
         height: 50,
         margin: EdgeInsets.only(top: 5),
@@ -29,8 +28,11 @@ class DiaryHeader extends StatelessWidget{
               ElevatedButton(
                   onPressed: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      return AddFood();
-                    }));
+                      debugPrint(meal.toString());
+                      return AddFood(meal:meal);
+                    }
+
+                    ));
                   },
                   child: Text(
                     'ADD FOOD',

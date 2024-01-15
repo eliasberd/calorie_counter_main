@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddFood extends StatefulWidget {
-  const AddFood({super.key});
+  final String meal;
+  const AddFood({super.key, required this.meal});
 
 
   @override
@@ -27,6 +28,7 @@ class _AddFood extends State<AddFood> {
     'Food 8',
     'Food 9',
   ];
+
   List<String> gramsValues = [
     '50 grams',
     '120 grams',

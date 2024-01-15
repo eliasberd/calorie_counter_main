@@ -1,7 +1,11 @@
+import 'package:calorie_counter_app_design/firebase_options.dart';
 import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -13,6 +17,7 @@ class MyApp extends StatelessWidget{
       theme: ThemeData(
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        useMaterial3: false
       ),
         debugShowCheckedModeBanner: false,
       home: TabBarViewMain()
