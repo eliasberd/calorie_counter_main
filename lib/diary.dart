@@ -13,6 +13,7 @@ class Tab1 extends StatefulWidget{
 }
 
 class _Tab1State extends State<Tab1> {
+  // DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
 
   @override
@@ -23,7 +24,7 @@ class _Tab1State extends State<Tab1> {
 
 
   // void writeData(){
-  //   databaseReference.child('food').push().set({
+  //   databaseReference.child('user').push().set({
   //     "name": "Chicken",
   //     "cal" : "hello"
   //   });

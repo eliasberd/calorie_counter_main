@@ -18,9 +18,9 @@ class FoodListState extends State<FoodList>{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
         child: FirebaseAnimatedList(
         query: databaseReference,
+        shrinkWrap: true,
         itemBuilder: (context, snapshot, index, animation){
           return ListTile(
             title: Text(
