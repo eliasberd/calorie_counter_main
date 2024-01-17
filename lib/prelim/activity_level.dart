@@ -1,3 +1,5 @@
+import 'package:calorie_counter_app_design/tabview.dart';
+
 import 'login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,7 +50,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
       // Navigate to the home screen or another destination
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LogInPage()),
+        MaterialPageRoute(builder: (context) => TabBarViewMain()),
       );
     } catch (e) {
       print("Error updating user data in Firestore: $e");
@@ -118,7 +120,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                   if (isFormValid) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => LogInPage()),
+                      MaterialPageRoute(builder: (context) => TabBarViewMain()),
                     );
                   }
                 },

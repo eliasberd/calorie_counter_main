@@ -38,13 +38,16 @@
             {
               "client_id": "939205999890-dvsq4eqirlb43u4p19o5eft39716746t.apps.googleusercontent.com",
               "client_type": 3
-            },
+<<<<<<< HEAD
+         },
             {
               "client_id": "939205999890-3j10cmn2l254561eiciucdcgkg5lpbab.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.calorieCounterAppDesign"
               }
+=======
+>>>>>>> 9ed396075bb9d08825566dd6b8713e1a2dee806c
             }
           ]
         }
