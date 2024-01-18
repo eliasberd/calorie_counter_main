@@ -1,4 +1,5 @@
 import 'package:calorie_counter_app_design/diary.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,7 +10,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuth _authService = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   String email = '';
   String username = '';
   String password = '';
@@ -48,20 +51,21 @@ class _LoginPageState extends State<LoginPage> {
                     height: 140,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/CalorieCheck_logosimple.png'),
+                        image: AssetImage(
+                            'assets/images/CalorieCheck_logosimple.png'),
                         fit: BoxFit.fill,
                       ),
                     ),
                   ),
                 ),
-                
+
                 // Red Container
                 Positioned(
                   top: 350,
                   child: Container(
                     width: 350,
                     height: 420,
-                    decoration:  ShapeDecoration(
+                    decoration: ShapeDecoration(
                       color: Color(0xFFF4B8B8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(36),
@@ -69,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                
+
                 // Login Text
                 const Positioned(
                   top: 260,
@@ -105,7 +109,9 @@ class _LoginPageState extends State<LoginPage> {
                   left: -188.97,
                   top: 141.61,
                   child: Transform(
-                    transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-0.68),
+                    transform: Matrix4.identity()
+                      ..translate(0.0, 0.0)
+                      ..rotateZ(-0.68),
                     child: Container(
                       width: 278.51,
                       height: 288.66,
@@ -128,7 +134,8 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               labelText: 'Email Address',
-                              prefixIcon: Icon(Icons.email, color: Colors.red[200]),
+                              prefixIcon:
+                                  Icon(Icons.email, color: Colors.red[200]),
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -145,7 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               labelText: 'Username',
-                              prefixIcon: Icon(Icons.person, color: Colors.red[200]),
+                              prefixIcon:
+                                  Icon(Icons.person, color: Colors.red[200]),
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -162,7 +170,8 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock, color: Colors.red[200]),
+                              prefixIcon:
+                                  Icon(Icons.lock, color: Colors.red[200]),
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -180,26 +189,35 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                
+
                 // Login Button
                 Positioned(
                   top: 700,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         // Save the form values
                         _formKey.currentState!.save();
 
-                        print('Email: $email');
-                        print('Username: $username');
-                        print('Password: $password');
+                        // Call the signInWithEmailAndPassword method from your service
+                        UserCredential user =
+                            await _authService.signInWithEmailAndPassword(
+                                email: email, password: password);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Tab1(), // Replace with your desired page
-                          ),
-                        );
+                        if (user != null) {
+                          // If the login is successful, navigate to the desired page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  Tab1(), // Replace with your desired page
+                            ),
+                          );
+                        } else {
+                          // Handle unsuccessful login
+                          // Show an error message or take appropriate action
+                          print('Login failed');
+                        }
                       }
                     },
                     child: const Text(
@@ -213,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                
+
                 // Forgot Password
                 Positioned(
                   top: 680,

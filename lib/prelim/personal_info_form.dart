@@ -1,7 +1,10 @@
+import 'package:calorie_counter_app_design/prelim/user_auth/end_user.dart';
+import 'package:calorie_counter_app_design/prelim/user_data_handler.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'components/continue_button.dart';
 import 'activity_level.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 class PersonalInfoForm extends StatefulWidget {
@@ -31,60 +34,6 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   TextEditingController _ageController = TextEditingController();
 
   String sex = '';
-
-  void _handlePersonalInfoFormSubmission() async {
-    // Handle the form submission logic here
-
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-
-    try {
-      // Reference to the 'users' collection in Firestore
-      final CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
-
-      // Update user information in the 'users' collection
-      await users.doc(userId).update({
-        'firstname': _firstNameController.text,
-        'lastname': _lastNameController.text,
-        'suffix': _suffixController.text,
-        'height': double.parse(_heightController.text),
-        'weight': double.parse(_weightController.text),
-        'age': int.parse(_ageController.text),
-        'sex': sex,
-        'email': widget.email,
-        'activityLevel': widget.activityLevel,
-      });
-
-      // Navigate to the next step in the registration process
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ActivityLevelForm(
-                onSubmit: _handleActivityLevelFormSubmission)),
-      );
-    } catch (e) {
-      print("Error updating user data in Firestore: $e");
-    }
-  }
-
-  void _handleActivityLevelFormSubmission(String selectedLevel) async {
-    // Handle the form submission logic here
-
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-
-    try {
-      // Reference to the 'users' collection in Firestore
-      final CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
-
-      // Update user information in the 'users' collection
-      await users.doc(userId).update({
-        'activityLevel': selectedLevel,
-      });
-    } catch (e) {
-      print("Error updating user data in Firestore: $e");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -218,16 +167,47 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                 ),
                 SizedBox(height: 40),
                 ContinueButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    String userId = FirebaseAuth.instance.currentUser!.uid;
+
                     if (_formKey.currentState!.validate()) {
-                      // All fields are valid, proceed to the next page
+                      // All fields are valid, create an EndUser instance
+                      EndUser user = EndUser(
+                        userId: userId,
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text,
+                        suffix: _suffixController.text,
+                        height: double.parse(_heightController.text),
+                        weight: double.parse(_weightController.text),
+                        age: int.parse(_ageController.text),
+                        sex: sex,
+                      );
+
+                      // Use UserDataHandler to handle data operations
+                      UserDataHandler userDataHandler = UserDataHandler();
+
+                      // Pass the EndUser instance to handlePersonalInfoFormSubmission
+                      await userDataHandler.handlePersonalInfoFormSubmission(
+                        user: user,
+                        selectedLevel:
+                            'default', // Provide a default level or handle it appropriately
+                      );
+
+                      // Proceed to the next page
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ActivityLevelForm(
-                            onSubmit: (selectedLevel) =>
-                                _handleActivityLevelFormSubmission(
-                                    selectedLevel),
+                            onSubmit: (selectedLevel) async {
+                              // Pass the EndUser instance to handleActivityLevelFormSubmission
+                              await userDataHandler
+                                  .handleActivityLevelFormSubmission(
+                                selectedLevel: selectedLevel,
+                                user: user,
+                              );
+                            },
+                            user: user,
                           ),
                         ),
                       );

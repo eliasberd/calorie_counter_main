@@ -32,4 +32,42 @@ class FirebaseAuthService {
       return null;
     }
   }
+
+  /// Signs the current user out.
+  ///
+  /// This function calls the Firebase authentication service to sign out the
+  /// currently authenticated user.
+  ///
+  /// Returns:
+  ///   - A [Future<void>] representing the completion of the sign-out process.
+  Future<void> signOut() async {
+    // Call the Firebase authentication service to sign out the user
+    await _auth.signOut();
+  }
+
+  /* Future<bool> isUserLoggedIn() async {
+    User? user = _auth.currentUser;
+    return user != null;
+  } */
+
+  // A function that gets the current user
+  User getCurrentUser() {
+    User user = _auth.currentUser!;
+    return user;
+  }
+
+  /// Initiates a password reset process by sending a reset email to the specified [email].
+  /// Returns true if the email is successfully sent, false otherwise.
+  Future<bool> passwordReset({required String email}) async {
+    try {
+      // Send password reset email using Firebase authentication
+      await _auth.sendPasswordResetEmail(email: email);
+
+      // Password reset email sent successfully
+      return true;
+    } on FirebaseAuthException {
+      // An error occurred during password reset
+      return false;
+    }
+  }
 }

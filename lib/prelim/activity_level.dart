@@ -1,13 +1,14 @@
-import 'package:calorie_counter_app_design/tabview.dart';
-
-import 'login.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:calorie_counter_app_design/prelim/login.dart';
+import 'package:calorie_counter_app_design/prelim/user_auth/end_user.dart';
 import 'package:flutter/material.dart';
 
 class ActivityLevelForm extends StatefulWidget {
   final Function(String) onSubmit;
-  const ActivityLevelForm({Key? key, required this.onSubmit});
+  final EndUser user; // Pass EndUser instance as a parameter
+
+  const ActivityLevelForm(
+      {Key? key, required this.onSubmit, required this.user})
+      : super(key: key);
 
   @override
   _ActivityLevelFormState createState() => _ActivityLevelFormState();
@@ -18,7 +19,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
 
   var formKey = GlobalKey<FormState>();
 
-  List<String> activityLeveList = [
+  List<String> activityLevelList = [
     'Sedentary',
     'Light Exercise',
     'Moderate Exercise',
@@ -26,36 +27,6 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
     'Very Active Exercise',
     'Extra Active Exercise'
   ];
-
-  void _handleActivityLevelFormSubmission(String selectedLevel) async {
-    // Handle the form submission logic here
-
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-
-    if (selectedLevel.isNotEmpty) {
-      // Invoke the callback with the selected level
-      widget.onSubmit(selectedLevel);
-    }
-
-    try {
-      // Reference to the 'users' collection in Firestore
-      final CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
-
-      // Update user information in the 'users' collection
-      await users.doc(userId).update({
-        'activityLevel': selectedLevel,
-      });
-
-      // Navigate to the home screen or another destination
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => TabBarViewMain()),
-      );
-    } catch (e) {
-      print("Error updating user data in Firestore: $e");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +36,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(
-                context); // Navigate back to the previous screen (Signup)
+            Navigator.pop(context);
           },
         ),
       ),
@@ -85,7 +55,6 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                 ),
               ),
             ),
-            // Radio buttons
             Container(
               margin: EdgeInsets.only(top: 10, left: 30, right: 30),
               decoration: BoxDecoration(
@@ -93,34 +62,36 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                 color: Colors.red[200],
               ),
               child: Column(
-                children: activityLeveList
+                children: activityLevelList
                     .map(
-                      (gender) => RadioListTile(
-                    title: Text(gender),
-                    value: gender,
-                    groupValue: selectedLevel,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedLevel = value.toString();
-                      });
-                    },
-                  ),
-                )
+                      (level) => RadioListTile(
+                        title: Text(level),
+                        value: level,
+                        groupValue: selectedLevel,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedLevel = value.toString();
+                          });
+                        },
+                      ),
+                    )
                     .toList(),
               ),
             ),
             SizedBox(height: 40),
-
             Container(
               width: 340,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   var isFormValid = formKey.currentState!.validate();
                   if (isFormValid) {
+                    // Call the onSubmit callback with selectedLevel
+                    widget.onSubmit(selectedLevel);
+
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => TabBarViewMain()),
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   }
                 },
@@ -128,7 +99,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                   primary: Colors.red[400],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                  ), // Set the color of the button
+                  ),
                 ),
                 child: const Text(
                   'Submit',

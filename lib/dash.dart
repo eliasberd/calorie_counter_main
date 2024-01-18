@@ -1,13 +1,12 @@
-import 'package:calorie_counter_app_design/dash_elements/actcard.dart';
 import 'package:calorie_counter_app_design/dash_elements/dashcard.dart';
 import 'package:flutter/material.dart';
 
-class Tab2 extends StatelessWidget{
+class Tab2 extends StatelessWidget {
   final int goal;
   final int food;
   final int exercise;
 
- Tab2({
+  Tab2({
     required this.goal,
     required this.food,
     required this.exercise,
@@ -22,23 +21,21 @@ class Tab2 extends StatelessWidget{
       children: [
         Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Row(children: [
-            Text(
-              'Calories',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 25,
+          child: Row(
+            children: [
+              Text(
+                'Calories',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 25,
+                ),
               ),
-            ),
-            Spacer(),
-            Text(
-              'Remaining = Goal - Food + Exercise',
-              style: TextStyle(
-                fontFamily: 'Chivo',
-                fontSize: 12
-              ),
-            )
-          ],
+              Spacer(),
+              Text(
+                'Remaining = Goal - Food + Exercise',
+                style: TextStyle(fontFamily: 'Chivo', fontSize: 12),
+              )
+            ],
           ),
         ),
         Row(
@@ -49,39 +46,27 @@ class Tab2 extends StatelessWidget{
                 title: 'Remaining',
                 value: '$remainingCalories',
                 icon: Icons.restaurant_menu,
-                boxwidth: 390
-            ),
-
-
+                boxwidth: 390),
             Spacer(),
           ],
         ),
         Row(
-        children: [
-          Spacer(),
-          DashboardCard(
-              title: 'Goal',
-              value: '$goal',
-              icon: Icons.star,
-              boxwidth: 120
-          ),
-          DashboardCard(
-              title: 'Food',
-              value: '$food',
-              icon: Icons.food_bank,
-              boxwidth: 120
-          ),
-
-          DashboardCard(
-            title: 'Exercise',
-            value: '$exercise',
-            icon: Icons.directions_run,
-              boxwidth: 120
-          ),
-          Spacer(),
-
-        ],
-
+          children: [
+            Spacer(),
+            DashboardCard(
+                title: 'Goal', value: '$goal', icon: Icons.star, boxwidth: 120),
+            DashboardCard(
+                title: 'Food',
+                value: '$food',
+                icon: Icons.food_bank,
+                boxwidth: 120),
+            DashboardCard(
+                title: 'Exercise',
+                value: '$exercise',
+                icon: Icons.directions_run,
+                boxwidth: 120),
+            Spacer(),
+          ],
         ),
         SizedBox(height: 20),
         Padding(

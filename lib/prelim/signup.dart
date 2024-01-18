@@ -44,6 +44,16 @@ class _SignupState extends State<Signup> {
   }
 
   void _signUp() async {
+    // Show loading indicator before calling signUpWithEmailAndPassword
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
     String email = _emailController.text;
     String password = _passwordController.text;
 
@@ -205,7 +215,7 @@ class _SignupState extends State<Signup> {
                         onPressed: () {
                           setState(() {
                             isConfirmPasswordVisible =
-                            !isConfirmPasswordVisible;
+                                !isConfirmPasswordVisible;
                           });
                         },
                       ),
