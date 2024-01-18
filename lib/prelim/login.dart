@@ -1,4 +1,4 @@
-import 'package:calorie_counter_app_design/diary.dart';
+import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -209,8 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  Tab1(), // Replace with your desired page
+                              builder: (context) => TabBarViewMain(),
                             ),
                           );
                         } else {
