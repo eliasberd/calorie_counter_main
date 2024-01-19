@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 class UserDataHandler {
   Future<void> handlePersonalInfoFormSubmission({
     required EndUser user,
+    required String email,
+    required String username,
     required String selectedLevel,
   }) async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
@@ -15,6 +17,9 @@ class UserDataHandler {
 
       // Update user information in the 'users' collection
       await users.doc(userId).set({
+        'userId': user.userId,
+        'email': user.email,
+        'username': user.username,
         'firstname': user.firstName,
         'lastname': user.lastName,
         'suffix': user.suffix,
@@ -36,6 +41,8 @@ class UserDataHandler {
   Future<void> handleActivityLevelFormSubmission({
     required String selectedLevel,
     required EndUser user,
+    required String username,
+    required String email,
   }) async {
     try {
       // Reference to the 'users' collection in Firestore
@@ -44,6 +51,9 @@ class UserDataHandler {
 
       // Update user information in the 'users' collection
       await users.doc(user.userId).update({
+        'userId': user.userId,
+        'email': user.email,
+        'username': user.username,
         'firstname': user.firstName,
         'lastname': user.lastName,
         'suffix': user.suffix,

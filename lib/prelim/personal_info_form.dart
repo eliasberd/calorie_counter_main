@@ -10,12 +10,14 @@ import 'package:flutter/material.dart';
 class PersonalInfoForm extends StatefulWidget {
   final String userId;
   final String email;
+  final String username;
   final String activityLevel;
 
   const PersonalInfoForm({
     Key? key,
     required this.userId,
     required this.email,
+    required this.username,
     required this.activityLevel,
   }) : super(key: key);
 
@@ -174,6 +176,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                       // All fields are valid, create an EndUser instance
                       EndUser user = EndUser(
                         userId: userId,
+                        email: widget.email,
+                        username: widget.username,
                         firstName: _firstNameController.text,
                         lastName: _lastNameController.text,
                         suffix: _suffixController.text,
@@ -189,8 +193,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                       // Pass the EndUser instance to handlePersonalInfoFormSubmission
                       await userDataHandler.handlePersonalInfoFormSubmission(
                         user: user,
-                        selectedLevel:
-                            'default', // Provide a default level or handle it appropriately
+                        email: 'email',
+                        username: 'username',
+                        selectedLevel: 'default',
                       );
 
                       // Proceed to the next page
@@ -205,6 +210,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                   .handleActivityLevelFormSubmission(
                                 selectedLevel: selectedLevel,
                                 user: user,
+                                username: widget.username,
+                                email: widget.email,
                               );
                             },
                             user: user,

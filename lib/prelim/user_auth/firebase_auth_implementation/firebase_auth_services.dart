@@ -1,14 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<User?> signUpWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, String username) async {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
+      // Store user information in Firestore
+      if (credential.user != null) {
+        await _firestore.collection('users').doc(credential.user!.uid).set({
+          'email': email,
+          'username': username,
+        });
+      }
+
+      // Return the user from the UserCredential
+      return credential.user;
       // Return the user from the UserCredential
       return credential.user;
     } catch (e) {

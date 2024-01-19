@@ -1,3 +1,5 @@
+import 'package:calorie_counter_app_design/prelim/login.dart';
+
 import 'personal_info_form.dart';
 import 'user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,9 +58,11 @@ class _SignupState extends State<Signup> {
 
     String email = _emailController.text;
     String password = _passwordController.text;
+    String username = _usernameController.text;
 
     // Create a new user in Firebase Authentication
-    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+    User? user =
+        await _auth.signUpWithEmailAndPassword(email, password, username);
 
     if (user != null) {
       // User is successfully created in Firebase Authentication
@@ -73,6 +77,7 @@ class _SignupState extends State<Signup> {
             // Pass user information to PersonalInfoForm
             userId: user.uid,
             email: email,
+            username: username,
             activityLevel: selectedLevel, // Pass selected activity level
           ),
         ),
@@ -89,7 +94,9 @@ class _SignupState extends State<Signup> {
         backgroundColor: Colors.red[400],
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -256,7 +263,12 @@ class _SignupState extends State<Signup> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // add the log in page to navigate
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
                           },
                           child: Text(
                             "Log In",

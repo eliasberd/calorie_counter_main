@@ -5,6 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 class EndUser {
   final String userId;
 
+  final String email;
+
+  final String username;
+
   // User's first name.
   final String firstName;
 
@@ -29,6 +33,8 @@ class EndUser {
   // Constructor for creating an EndUser instance.
   EndUser({
     required this.userId,
+    required this.email,
+    required this.username,
     required this.firstName,
     required this.lastName,
     this.suffix,
@@ -46,6 +52,8 @@ class EndUser {
     // Create and return an EndUser instance with data from the map.
     return EndUser(
       userId: map["userId"] ?? '',
+      email: map["email"] ?? '',
+      username: map["username"] ?? '',
       firstName: map["firstname"] ?? '',
       lastName: map["lastname"] ?? '',
       suffix: map["suffix"],
@@ -57,7 +65,8 @@ class EndUser {
   }
 }
 
-Future<void> handleActivityLevelFormSubmission(String selectedLevel) async {
+Future<void> handleActivityLevelFormSubmission(
+    String selectedLevel, String email, String username) async {
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
   try {
@@ -68,6 +77,8 @@ Future<void> handleActivityLevelFormSubmission(String selectedLevel) async {
     // Update user information in the 'users' collection
     await users.doc(userId).update({
       'activityLevel': selectedLevel,
+      'email': email,
+      'username': username,
     });
   } catch (e) {
     print("Error updating user data in Firestore: $e");
