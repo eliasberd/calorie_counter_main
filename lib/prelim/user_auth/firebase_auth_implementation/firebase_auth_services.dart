@@ -21,8 +21,6 @@ class FirebaseAuthService {
 
       // Return the user from the UserCredential
       return credential.user;
-      // Return the user from the UserCredential
-      return credential.user;
     } catch (e) {
       // Print the specific error message
       print("Error during sign up: $e");
