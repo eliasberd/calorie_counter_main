@@ -109,7 +109,7 @@ class _AddFoodTestState extends State<AddFoodTest> {
     for (int i = 0; i < isCheckedList.length; i++) {
       if (isCheckedList[i]) {
         // Add the checked item to Firebase Realtime Database
-        databaseReference.child('addedFood').child(currentUid).child(widget.meal).push().set({
+        databaseReference.child('addedFood').child(currentUid).child(widget.meal).child('$i').set({
           'food': foodItems[i],
           'cal': gramsValues[i]
         });

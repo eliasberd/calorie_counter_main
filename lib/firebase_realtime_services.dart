@@ -7,16 +7,40 @@ class FirebaseService {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   
 
-  Future<String?> fetchCal() async {
+  Future<int?> fetchCal() async {
     String user = firebaseAuthService.getCurrentUserUid();
-    DataSnapshot snapshot = await _database.child('user/$user/cal').get();
+    DataSnapshot snapshot = await _database.child('user/$user/bmr').get();
 
     if (snapshot.value != null) {
-      String? cal = snapshot.value as String?;
-      return cal;
+      try {
+        String cal = snapshot.value.toString();
+        int intValue = int.parse(cal);
+        return intValue;
+      } catch(e){
+        print('Error');
+        return null;
+      }
+
     }
 
-    return null;
+  }
+
+  Future<List<int>> fetchBreakfast() async{
+    List<int> dataList =[];
+    String user = firebaseAuthService.getCurrentUserUid();
+    DataSnapshot snapshot = await _database.child('addedFood').child('$user').child('Breakfast').get();
+
+    if(snapshot.value != null){
+      Map<dynamic,dynamic>? values = snapshot.value as Map<dynamic,dynamic>;
+      values.forEach((key, value) {
+        dataList.add(value);
+      }
+      );
+      return dataList;
+    }
+    return [];
+
+
   }
   
 

@@ -13,7 +13,8 @@ class Tab1 extends StatefulWidget {
 }
 
 class _Tab1State extends State<Tab1> {
-  String? cal;
+  int? cal;
+  List<int> aggCalBreakfast = [];
   String currentUid = "";
   StreamController<String> _dataController = StreamController<String>();
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
@@ -23,10 +24,11 @@ class _Tab1State extends State<Tab1> {
   void initState() {
     super.initState();
     setUid();
-    fetchData();
     // writeData();
+    fetchData();
+    fetchBreakfast();
 
-    databaseReference.child('user/$currentUid/cal').onValue.listen((event) {
+    databaseReference.child('user/$currentUid/bmr').onValue.listen((event) {
       String newData = event.snapshot.value.toString();
       _dataController.add(newData);
 
@@ -41,10 +43,19 @@ class _Tab1State extends State<Tab1> {
 
   Future<void> fetchData() async{
     FirebaseService firebaseService = FirebaseService();
-    String? calData = await firebaseService.fetchCal();
+    int? calData = await firebaseService.fetchCal();
 
     setState(() {
       cal= calData;
+    });
+  }
+
+  Future<void> fetchBreakfast() async{
+    FirebaseService firebaseService = FirebaseService();
+    List<int> aggCal = await firebaseService.fetchBreakfast();
+
+    setState(() {
+      aggCalBreakfast = aggCal;
     });
   }
 
@@ -52,7 +63,7 @@ class _Tab1State extends State<Tab1> {
 
   // void writeData(){
   //   databaseReference.child('user').child(currentUid).set({
-  //     "cal" : "120"
+  //     "bmr" : "120"
   //   });
   // }
 
@@ -121,6 +132,7 @@ class _Tab1State extends State<Tab1> {
           ),
       // ElevatedButton(onPressed: (){
       //   print(cal);
+      //   print(aggCalBreakfast);
       // },
       //     child: Text('test'))
         ],
