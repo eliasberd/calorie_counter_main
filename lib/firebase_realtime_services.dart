@@ -25,6 +25,18 @@ class FirebaseService {
 
   }
 
+  Future<String?> fetchCalcuCal() async {
+    String user = firebaseAuthService.getCurrentUserUid();
+    DataSnapshot snapshot = await _database.child('user/$user/cal').get();
+
+    if (snapshot.value != null) {
+      String? cal = snapshot.value as String?;
+      return cal;
+    }
+
+    return null;
+  }
+
   Future<List<int>> fetchBreakfast() async{
     List<int> dataList =[];
     String user = firebaseAuthService.getCurrentUserUid();

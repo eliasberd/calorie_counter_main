@@ -15,17 +15,18 @@ class Tab1 extends StatefulWidget {
 class _Tab1State extends State<Tab1> {
   int? cal;
   List<int> aggCalBreakfast = [];
+  String? calculatedBMR;
   String currentUid = "";
   StreamController<String> _dataController = StreamController<String>();
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
-
 
   @override
   void initState() {
     super.initState();
     setUid();
     // writeData();
-    fetchData();
+    fetchCal();
+    fetchBMR();
     fetchBreakfast();
 
     databaseReference.child('user/$currentUid/bmr').onValue.listen((event) {
@@ -34,20 +35,31 @@ class _Tab1State extends State<Tab1> {
 
     });
   }
-  void setUid(){
+
+  void setUid() {
     FirebaseAuthService firebaseAuthService = FirebaseAuthService();
     setState(() {
       currentUid = firebaseAuthService.getCurrentUserUid();
     });
   }
 
-  Future<void> fetchData() async{
+  Future<void> fetchCal() async {
     FirebaseService firebaseService = FirebaseService();
     int? calData = await firebaseService.fetchCal();
 
     setState(() {
-      cal= calData;
+      cal = calData;
     });
+  }
+
+  Future<void> fetchBMR() async{
+    FirebaseService firebaseService = FirebaseService();
+    String? calculatedBMRdata = await firebaseService.fetchCalcuCal();
+
+    setState(() {
+      calculatedBMR = calculatedBMRdata;
+    });
+
   }
 
   Future<void> fetchBreakfast() async{

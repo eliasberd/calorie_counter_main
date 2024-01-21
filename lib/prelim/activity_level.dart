@@ -1,14 +1,18 @@
+import 'package:calorie_counter_app_design/prelim/bmr_output.dart';
 import 'package:calorie_counter_app_design/prelim/login.dart';
 import 'package:calorie_counter_app_design/prelim/user_auth/end_user.dart';
 import 'package:flutter/material.dart';
+import 'bmr_calculator.dart';
 
 class ActivityLevelForm extends StatefulWidget {
   final Function(String) onSubmit;
   final EndUser user; // Pass EndUser instance as a parameter
 
-  const ActivityLevelForm(
-      {Key? key, required this.onSubmit, required this.user})
-      : super(key: key);
+  const ActivityLevelForm({
+    Key? key,
+    required this.onSubmit,
+    required this.user,
+  }) : super(key: key);
 
   @override
   _ActivityLevelFormState createState() => _ActivityLevelFormState();
@@ -18,6 +22,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
   String selectedLevel = '';
 
   var formKey = GlobalKey<FormState>();
+  BMRCalculator calculator = BMRCalculator(); // Create an instance of BMRCalculator
 
   List<String> activityLevelList = [
     'Sedentary',
@@ -86,12 +91,26 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                 onPressed: () async {
                   var isFormValid = formKey.currentState!.validate();
                   if (isFormValid) {
+                    //calculate the BMR
+                    int calculatedBMR = calculator.calculateBMR(
+                      age: widget.user.age,
+                      weight: widget.user.weight,
+                      height: widget.user.height,
+                      sex: widget.user.sex,
+                      activityLevel: selectedLevel,
+                     
+                    );
                     // Call the onSubmit callback with selectedLevel
                     widget.onSubmit(selectedLevel);
 
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      MaterialPageRoute(
+                        builder: (context) => BmrOutput(
+                          selectedLevel: selectedLevel,
+                          calculatedBMR: calculatedBMR.toDouble(), 
+                        ),
+                      ),
                     );
                   }
                 },
