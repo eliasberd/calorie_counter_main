@@ -1,4 +1,4 @@
-
+import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -6,37 +6,39 @@ import 'package:flutter/material.dart';
 
 class FoodList extends StatefulWidget{
   @override
+  String meal;
+  FoodList({required this.meal});
   State<FoodList> createState() => FoodListState();
 
 }
 
 class FoodListState extends State<FoodList>{
-
-  final DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('addedFood');
+  final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+  String currentUid = FirebaseAuthService().getCurrentUserUid();
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: FirebaseAnimatedList(
-        query: databaseReference,
+        query: databaseReference.child('addedFood').child(widget.meal).child(currentUid),
         shrinkWrap: true,
         itemBuilder: (context, snapshot, index, animation){
           return ListTile(
             title: Text(
-              snapshot.child('name').value.toString(),
+              snapshot.child('food').value.toString(),
               style: TextStyle(
                 fontFamily: 'Poppins',
                   fontSize: 25
               ),
             ),
-            subtitle: Text(
-                snapshot.child('cal').value.toString(),
-              style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 15
-              ),
-            ),
+            // subtitle: Text(
+            //     snapshot.child('cal').value.toString(),
+            //   style: TextStyle(
+            //       fontFamily: 'Poppins',
+            //       fontSize: 15
+            //   ),
+            // ),
           );
 
         }

@@ -1,3 +1,4 @@
+import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 
 class AddFood extends StatefulWidget {
@@ -10,12 +11,15 @@ class AddFood extends StatefulWidget {
 }
 
 class _AddFood extends State<AddFood> {
+  String currentUid = "";
   int counter = 0;
   int selectedMealIndex = 0;
   int selectedCategoryIndex = 0;
   List<String> mealOptions = ['BREAKFAST', 'LUNCH', 'DINNER'];
   List<String> categoryOptions = ['FOOD', 'SAVED MEALS', 'RECENTLY EATEN'];
   List<bool> checkboxValues = List.generate(9, (index) => false);
+
+
 
   List<String> foodItems = [
     'Egg',
@@ -68,11 +72,19 @@ class _AddFood extends State<AddFood> {
   void initState() {
     super.initState();
     filteredFoodItems = List<String>.from(foodItems);
+    setUid();
   }
 
   void incrementCounter() {
     setState(() {
       counter++;
+    });
+  }
+
+  void setUid(){
+    FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+    setState(() {
+      currentUid = firebaseAuthService.getCurrentUserUid();
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:calorie_counter_app_design/food.dart';
+import 'package:calorie_counter_app_design/food_test.dart';
 import 'package:flutter/material.dart';
 
 class DiaryHeader extends StatelessWidget{
@@ -29,7 +30,7 @@ class DiaryHeader extends StatelessWidget{
                   onPressed: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context){
                       debugPrint(meal.toString());
-                      return AddFood(meal:meal);
+                      return AddFoodTest(meal:meal);
                     }
 
                     ));

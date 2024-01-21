@@ -77,7 +77,7 @@ class _Tab1State extends State<Tab1> {
       ),
       Column(children: <Widget>[
         DiaryHeader(meal: 'Breakfast', calorieValue: 100),
-        FoodList()
+        FoodList(meal: 'Breakfast')
       ]),
       Column(
         children: [
