@@ -29,6 +29,7 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.redAccent,
         title: Text(

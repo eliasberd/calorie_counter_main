@@ -66,6 +66,12 @@ class FirebaseAuthService {
     return user;
   }
 
+  String getCurrentUserUid() {
+    User user = _auth.currentUser!;
+    return user.uid;
+  }
+
+
   /// Initiates a password reset process by sending a reset email to the specified [email].
   /// Returns true if the email is successfully sent, false otherwise.
   Future<bool> passwordReset({required String email}) async {

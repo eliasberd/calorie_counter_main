@@ -1,6 +1,9 @@
 import 'package:calorie_counter_app_design/diary_elements/diary_header.dart';
 import 'package:calorie_counter_app_design/diary_elements/foodlist.dart';
-
+import 'package:calorie_counter_app_design/firebase_realtime_services.dart';
+import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class Tab1 extends StatefulWidget {
@@ -9,18 +12,37 @@ class Tab1 extends StatefulWidget {
 }
 
 class _Tab1State extends State<Tab1> {
-  // DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+  String? cal;
+  String currentUid = "";
+  DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+
 
   @override
   void initState() {
     super.initState();
+    setUid();
+    fetchData();
     // writeData();
+  }
+  void setUid(){
+    FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+    setState(() {
+      currentUid = firebaseAuthService.getCurrentUserUid();
+    });
+  }
+
+  Future<void> fetchData() async{
+    FirebaseService firebaseService = FirebaseService();
+    String? calData = await firebaseService.fetchCal();
+
+    setState(() {
+      cal= calData;
+    });
   }
 
   // void writeData(){
-  //   databaseReference.child('user').push().set({
-  //     "name": "Chicken",
-  //     "cal" : "hello"
+  //   databaseReference.child('user').child(currentUid).set({
+  //     "cal" : "120"
   //   });
   // }
 
@@ -34,19 +56,25 @@ class _Tab1State extends State<Tab1> {
           child: Container(
               padding: EdgeInsets.only(left: 20, right: 20),
               child: Row(children: <Widget>[
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.keyboard_arrow_left),
-                    iconSize: 35),
+                Text(
+                    'Total Calories: ',
+                  style: TextStyle(
+                    fontFamily: "Chivo",
+                    fontSize: 30
+                  ),
+
+                ),
                 Spacer(),
-                Text("TODAY",
-                    style: TextStyle(fontFamily: "Chivo", fontSize: 30)),
+                Text(cal!,
+                    style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 30))
+                ,
                 Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.keyboard_arrow_right),
-                    iconSize: 35),
-              ]))),
+              ]
+              )
+          )
+      ),
       Column(children: <Widget>[
         DiaryHeader(meal: 'Breakfast', calorieValue: 100),
         FoodList()
