@@ -47,27 +47,47 @@ class _SignupState extends State<Signup> {
 
   void _signUp() async {
     // Show loading indicator before calling signUpWithEmailAndPassword
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
 
     String email = _emailController.text;
     String password = _passwordController.text;
+    String confirmPassword = _confirmPasswordController.text;
     String username = _usernameController.text;
+
+    // Check if passwords match
+    if (password != confirmPassword) {
+      // Display the error message in a dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Sign Up Failed',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text('Passwords do not match. Please check again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Exit the method if passwords don't match
+    }
 
     // Create a new user in Firebase Authentication
     User? user =
         await _auth.signUpWithEmailAndPassword(email, password, username);
 
+    // If user is not null, the signup was successful
     if (user != null) {
-      // User is successfully created in Firebase Authentication
-      print("User is successfully created");
-
       // Navigate to the next step in the registration process
       // Navigate to the PersonalInfoForm and pass user information
       Navigator.push(
@@ -83,7 +103,31 @@ class _SignupState extends State<Signup> {
         ),
       );
     } else {
-      print("Some error occurred during user creation");
+      // Display the error message in a dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Sign Up Failed',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text(
+                ' The email address is already in use by another account.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
