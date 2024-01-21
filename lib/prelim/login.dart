@@ -1,287 +1,179 @@
-import 'package:calorie_counter_app_design/tabview.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'signup.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final FirebaseAuth _authService = FirebaseAuth.instance;
+class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String email = '';
-  String username = '';
   String password = '';
+
+  void _navigateToSignUp(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => Signup(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: SingleChildScrollView(
-        child: Center(
+        child: Form(
+          key: _formKey,
           child: Container(
-            width: 400,
-            height: 800,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(color: Colors.white),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Back Button
-                Positioned(
-                  top: 20,
-                  left: 20,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
+            margin: EdgeInsets.only(top: 30),
+            child: Padding(
+              padding: EdgeInsets.all(30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email, color: Colors.red[200]),
+                      labelText: 'Email Address',
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Email is required';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      email = value!;
                     },
                   ),
-                ),
-
-                // Logo
-                Positioned(
-                  top: 50,
-                  right: 50,
-                  child: Container(
-                    width: 140,
-                    height: 140,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/images/CalorieCheck_logosimple.png'),
-                        fit: BoxFit.fill,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.person, color: Colors.red[200]),
+                      labelText: 'Username',
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Username is required';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      // Save the username
+                    },
                   ),
-                ),
-
-                // Red Container
-                Positioned(
-                  top: 350,
-                  child: Container(
-                    width: 350,
-                    height: 420,
-                    decoration: ShapeDecoration(
-                      color: Color(0xFFF4B8B8),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(36),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock, color: Colors.red[200]),
+                      labelText: 'Password',
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Password is required';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      password = value!;
+                    },
+                    obscureText: true,
                   ),
-                ),
-
-                // Login Text
-                const Positioned(
-                  top: 260,
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-
-                // Red Line
-                Positioned(
-                  top: 290,
-                  child: Container(
-                    width: 60,
-                    decoration: const ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 3,
-                          color: Color(0xFFF93E3E),
+                  SizedBox(height: 10),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        // Add the code for forgot password action here
+                      },
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w200,
+                          color: Colors.red,
                         ),
                       ),
                     ),
                   ),
-                ),
-
-                // Polygon Shape
-                Positioned(
-                  left: -188.97,
-                  top: 141.61,
-                  child: Transform(
-                    transform: Matrix4.identity()
-                      ..translate(0.0, 0.0)
-                      ..rotateZ(-0.68),
-                    child: Container(
-                      width: 278.51,
-                      height: 288.66,
-                      decoration: const BoxDecoration(color: Color(0xC9F70B0B)),
-                    ),
-                  ),
-                ),
-
-                // Text Form fields
-                Positioned(
-                  top: 370,
-                  child: Container(
-                    width: 300,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              labelText: 'Email Address',
-                              prefixIcon:
-                                  Icon(Icons.email, color: Colors.red[200]),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Email is required';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              email = value!;
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              labelText: 'Username',
-                              prefixIcon:
-                                  Icon(Icons.person, color: Colors.red[200]),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Username is required';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              username = value!;
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              labelText: 'Password',
-                              prefixIcon:
-                                  Icon(Icons.lock, color: Colors.red[200]),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Password is required';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              password = value!;
-                            },
-                            obscureText: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Login Button
-                Positioned(
-                  top: 700,
-                  child: ElevatedButton(
-                    onPressed: () async {
+                  SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Save the form values
-                        _formKey.currentState!.save();
-
-                        try {
-                          // Call the signInWithEmailAndPassword method from your service
-                          UserCredential userCredential =
-                              await _authService.signInWithEmailAndPassword(
-                            email: email,
-                            password: password,
-                          );
-
-                          // If the login is successful, userCredential.user will be not null
-                          if (userCredential.user != null) {
-                            // Navigate to the desired page or perform other actions
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TabBarViewMain(),
-                              ),
-                            );
-                          } else {
-                            // Handle other cases where userCredential.user is null
-                            print("Unexpected error: user is null");
-                          }
-                        } catch (e) {
-                          String errorMessage =
-                              'Invalid email, username or password. Please try again.';
-
-                          // Display the error message in a dialog
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Login Failed',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                content: Text(errorMessage),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
+                        // Implement login logic here
                       }
                     },
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red[500],
+                      minimumSize: Size(128, 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    child: Container(
+                      width: 120,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          'LOGIN',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-
-                // Forgot Password
-                Positioned(
-                  top: 680,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle forgot password
-                    },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        color: Color(0xFFF93E3E),
-                        fontSize: 12,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
+                  SizedBox(height: 10),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an Account? ",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _navigateToSignUp(context);
+                          },
+                          child: Text(
+                            "SignUp.",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w200,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
