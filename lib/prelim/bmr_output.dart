@@ -1,4 +1,6 @@
-import 'package:calorie_counter_app_design/diary.dart';
+
+import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
+import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -17,6 +19,22 @@ class BmrOutput extends StatefulWidget {
 }
 
 class _BmrOutputState extends State<BmrOutput> {
+  DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+  String currentUid = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setUid();
+  }
+  void setUid() {
+    FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+    setState(() {
+      currentUid = firebaseAuthService.getCurrentUserUid();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,9 +113,12 @@ class _BmrOutputState extends State<BmrOutput> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                databaseReference.child('user').child(currentUid).set({
+                  "bmr" : widget.calculatedBMR
+                  });
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {
-                    return Tab1();
+                    return TabBarViewMain();
                   }),
                 );
               },
