@@ -21,7 +21,7 @@ class FoodListState extends State<FoodList>{
   Widget build(BuildContext context) {
     return Container(
         child: FirebaseAnimatedList(
-        query: databaseReference.child('addedFood').child(widget.meal).child(currentUid),
+        query: databaseReference.child('addedFood').child(currentUid).child(widget.meal),
         shrinkWrap: true,
         itemBuilder: (context, snapshot, index, animation){
           return ListTile(
@@ -32,15 +32,14 @@ class FoodListState extends State<FoodList>{
                   fontSize: 25
               ),
             ),
-            // subtitle: Text(
-            //     snapshot.child('cal').value.toString(),
-            //   style: TextStyle(
-            //       fontFamily: 'Poppins',
-            //       fontSize: 15
-            //   ),
-            // ),
+            trailing: Text(
+                snapshot.child('cal').value.toString(),
+              style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 15
+              ),
+            ),
           );
-
         }
     )
     );
