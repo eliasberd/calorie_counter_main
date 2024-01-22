@@ -42,13 +42,6 @@ class FirebaseService {
     String user = firebaseAuthService.getCurrentUserUid();
     DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('addedFood/$user/Breakfast');
     List<int>? dataLists = [];
-    int? dataList;
-    int? itemLength;
-    //
-    // DataSnapshot snapshot = await databaseReference.get();
-    // if(snapshot.value !=null){
-    //   itemLength = snapshot.value?.length;
-    // }
 
     for(int i = 0 ; i <= 6; i++){
       DataSnapshot snapshot = await databaseReference.child('$i').child('cal').get();
@@ -56,12 +49,60 @@ class FirebaseService {
         dataLists.add(snapshot.value as int);
 
       }
-      // return [];
     }
     return dataLists;
 
+  }
+
+  Future<List<int>> fetchLunch() async {
+    String user = firebaseAuthService.getCurrentUserUid();
+    DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('addedFood/$user/Lunch');
+    List<int>? dataLists = [];
+
+    for(int i = 0 ; i <= 6; i++){
+      DataSnapshot snapshot = await databaseReference.child('$i').child('cal').get();
+      if(snapshot.value != null){
+        dataLists.add(snapshot.value as int);
+
+      }
+    }
+    return dataLists;
 
   }
+
+  Future<List<int>> fetchDinner() async {
+    String user = firebaseAuthService.getCurrentUserUid();
+    DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('addedFood/$user/Dinner');
+    List<int>? dataLists = [];
+
+    for(int i = 0 ; i <= 6; i++){
+      DataSnapshot snapshot = await databaseReference.child('$i').child('cal').get();
+      if(snapshot.value != null){
+        dataLists.add(snapshot.value as int);
+
+      }
+    }
+    return dataLists;
+
+  }
+
+  Future<List<int>> fetchSnack() async {
+    String user = firebaseAuthService.getCurrentUserUid();
+    DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('addedFood/$user/Snack');
+    List<int>? dataLists = [];
+
+    for(int i = 0 ; i <= 6; i++){
+      DataSnapshot snapshot = await databaseReference.child('$i').child('cal').get();
+      if(snapshot.value != null){
+        dataLists.add(snapshot.value as int);
+
+      }
+    }
+    return dataLists;
+
+  }
+
+
 
     // DataSnapshot snapshot = await databaseReference.get();
     // final value = snapshot.value;

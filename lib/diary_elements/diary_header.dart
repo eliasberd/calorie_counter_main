@@ -9,7 +9,7 @@ class DiaryHeader extends StatelessWidget{
   DiaryHeader({required this.meal, required this.calorieValue});
   @override
   Widget build(BuildContext context) {
-      return Container(
+    return Container(
         color: Colors.redAccent,
         height: 50,
         margin: EdgeInsets.only(top: 5),

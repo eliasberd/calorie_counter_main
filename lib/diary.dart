@@ -13,10 +13,20 @@ class Tab1 extends StatefulWidget {
 }
 
 class _Tab1State extends State<Tab1> {
-  int? cal;
+  int cal = 0;
+  int newCal = 0;
+  bool hasUpdated = false;
   List<int> aggCalBreakfast = [];
-  String? calculatedBMR;
+  List<int> aggCalLunch = [];
+  List<int> aggCalDinner = [];
+  List<int> aggCalSnack = [];
+  List<int> aggCalTotal = [];
   String currentUid = "";
+  int breakfastVal = 0;
+  int lunchVal = 0;
+  int dinnerVal = 0;
+  int snackVal = 0;
+  int userTotalCal = 0;
   StreamController<String> _dataController = StreamController<String>();
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
@@ -28,6 +38,9 @@ class _Tab1State extends State<Tab1> {
     fetchCal();
     // fetchBMR();
     fetchBreakfast();
+    fetchLunch();
+    fetchDinner();
+    fetchSnack();
 
     databaseReference.child('user/$currentUid/bmr').onValue.listen((event) {
       String newData = event.snapshot.value.toString();
@@ -45,7 +58,7 @@ class _Tab1State extends State<Tab1> {
 
   Future<void> fetchCal() async {
     FirebaseService firebaseService = FirebaseService();
-    int? calData = await firebaseService.fetchCal();
+    int calData = await firebaseService.fetchCal() as int;
 
     setState(() {
       cal = calData;
@@ -68,10 +81,107 @@ class _Tab1State extends State<Tab1> {
 
     setState(() {
       aggCalBreakfast = aggCal;
+      addAggBfast(aggCalBreakfast);
+    });
+  }
+
+  Future<void> fetchLunch() async{
+    FirebaseService firebaseService = FirebaseService();
+    List<int> aggCal = await firebaseService.fetchLunch();
+
+    setState(() {
+      aggCalLunch = aggCal;
+      addAggLunch(aggCalLunch);
+    });
+  }
+
+  Future<void> fetchDinner() async{
+    FirebaseService firebaseService = FirebaseService();
+    List<int> aggCal = await firebaseService.fetchDinner();
+
+    setState(() {
+      aggCalDinner = aggCal;
+      addAggDinner(aggCalDinner);
+    });
+  }
+
+  Future<void> fetchSnack() async{
+    FirebaseService firebaseService = FirebaseService();
+    List<int> aggCal = await firebaseService.fetchSnack();
+
+    setState(() {
+      aggCalSnack = aggCal;
+      addAggSnack(aggCalSnack);
+
     });
   }
 
 
+  void addAggBfast(List<int> list){
+    int sum = 0;
+    for(int i = 0; i < list.length; i++){
+      sum += list[i];
+  }
+    setState(() {
+      breakfastVal = sum;
+      totalCal(breakfastVal);
+    });
+}
+
+  void addAggLunch(List<int> list){
+    int sum = 0;
+    for(int i = 0; i < list.length; i++){
+      sum += list[i];
+    }
+    setState(() {
+      lunchVal = sum;
+      totalCal(lunchVal);
+    });
+  }
+
+  void addAggDinner(List<int> list){
+    int sum = 0;
+    for(int i = 0; i < list.length; i++){
+      sum += list[i];
+    }
+    setState(() {
+      dinnerVal = sum;
+      totalCal(dinnerVal);
+    });
+  }
+
+  void addAggSnack(List<int> list){
+    int sum = 0;
+    for(int i = 0; i < list.length; i++){
+      sum += list[i];
+    }
+    setState(() {
+      snackVal = sum;
+      totalCal(snackVal);
+    });
+  }
+
+  void totalCal(int sum){
+    int totalCal = 0;
+    aggCalTotal.add(sum);
+    for(int i = 0; i < aggCalTotal.length; i ++){
+      totalCal += aggCalTotal[i];
+    }
+    setState(() {
+      userTotalCal = totalCal;
+      decCal(userTotalCal);
+    });
+  }
+
+  void decCal(int sum){
+    int decCal = cal;
+    decCal = decCal-sum;
+
+    setState(() {
+      newCal = decCal;
+    });
+
+  }
 
   // void writeData(){
   //   databaseReference.child('user').child(currentUid).set({
@@ -112,19 +222,30 @@ class _Tab1State extends State<Tab1> {
                 ),
 
                 Spacer(),
+                IconButton(onPressed: (){
+                  if(!hasUpdated){
+                    databaseReference.child('user').child(currentUid).update({
+                      'bmr': newCal
+                    });
+                    setState(() {
+                      hasUpdated = true;
+                    });
+                  }
+
+                }, icon: Icon(Icons.restart_alt))
               ]
               )
           )
       ),
       Column(children: <Widget>[
-        DiaryHeader(meal: 'Breakfast', calorieValue: 100),
+        DiaryHeader(meal: 'Breakfast', calorieValue: breakfastVal),
         FoodList(meal: 'Breakfast')
       ]),
       Column(
         children: [
           Column(
             children: <Widget>[
-              DiaryHeader(meal: 'Lunch', calorieValue: 100),
+              DiaryHeader(meal: 'Lunch', calorieValue: lunchVal),
               FoodList(meal: 'Lunch')
             ],
           )
@@ -132,22 +253,39 @@ class _Tab1State extends State<Tab1> {
       ),
       Column(
         children: <Widget>[
-          DiaryHeader(meal: 'Dinner', calorieValue: 100),
+          DiaryHeader(meal: 'Dinner', calorieValue: dinnerVal),
           FoodList(meal: 'Dinner')
           ]
       ),
       Column(
         children: <Widget>[
-          DiaryHeader(meal: 'Snack', calorieValue: 100),
+          DiaryHeader(meal: 'Snack', calorieValue: snackVal),
           FoodList(meal: 'Snack')
             ],
           ),
       ElevatedButton(onPressed: (){
+        print('----------------------------');
         print(cal);
         print(aggCalBreakfast);
+        print(aggCalLunch);
+        print(aggCalDinner);
+        print(aggCalSnack);
+        print(breakfastVal);
+        print(lunchVal);
+        print(dinnerVal);
+        print(snackVal);
+        print(aggCalTotal);
+        print(userTotalCal);
+        print(newCal);
+        print('----------------------------');
+
       },
+
           child: Text('test'))
         ],
       );
   }
+
 }
+
+
