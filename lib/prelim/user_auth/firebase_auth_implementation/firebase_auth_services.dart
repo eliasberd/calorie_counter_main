@@ -38,6 +38,7 @@ class FirebaseAuthService {
       return credential.user;
     } catch (e) {
       // Print the specific error message
+
       print("Error during sign in: $e");
       return null;
     }
@@ -70,7 +71,6 @@ class FirebaseAuthService {
     User user = _auth.currentUser!;
     return user.uid;
   }
-
 
   /// Initiates a password reset process by sending a reset email to the specified [email].
   /// Returns true if the email is successfully sent, false otherwise.

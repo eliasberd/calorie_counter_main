@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:calorie_counter_app_design/diary_elements/diary_header.dart';
 import 'package:calorie_counter_app_design/diary_elements/foodlist.dart';
 import 'package:calorie_counter_app_design/firebase_realtime_services.dart';
@@ -14,6 +15,7 @@ class Tab1 extends StatefulWidget {
 class _Tab1State extends State<Tab1> {
   String? calculatedBMR;
   String currentUid = "";
+  StreamController<String> _dataController = StreamController<String>();
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
   @override
@@ -22,6 +24,12 @@ class _Tab1State extends State<Tab1> {
     setUid();
     fetchData();
     // writeData();
+
+    databaseReference.child('user/$currentUid/cal').onValue.listen((event) {
+      String newData = event.snapshot.value.toString();
+      _dataController.add(newData);
+
+    });
   }
 
   void setUid() {
@@ -40,6 +48,8 @@ class _Tab1State extends State<Tab1> {
     });
   }
 
+
+
   // void writeData(){
   //   databaseReference.child('user').child(currentUid).set({
   //     "cal" : "120"
@@ -50,32 +60,38 @@ class _Tab1State extends State<Tab1> {
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       Container(
-        color: Colors.white,
-        height: 75,
-        width: 500,
-        child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Row(
-            children: <Widget>[
-              Text(
-                'Total Calories: ',
-                style: TextStyle(
-                  fontFamily: "Chivo",
-                  fontSize: 30,
+          color: Colors.white,
+          height: 75,
+          width: 500,
+          child: Container(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: Row(children: <Widget>[
+                Text(
+                    'Total Calories: ',
+                  style: TextStyle(
+                    fontFamily: "Chivo",
+                    fontSize: 30
+                  ),
+
                 ),
-              ),
-              Spacer(),
-              Text(
-                calculatedBMR ?? '', // Use calculatedBMR, handle null case
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 30,
+                Spacer(),
+                StreamBuilder<String>(
+                    stream: _dataController.stream,
+                    builder: (context, snapshot){
+                      return Text('${snapshot.data}',
+                      style: TextStyle(
+                        fontFamily: 'Chivo',
+                        fontSize: 30
+                      ),
+                      );
+                    }
+
                 ),
-              ),
-              Spacer(),
-            ],
-          ),
-        ),
+
+                Spacer(),
+              ]
+              )
+          )
       ),
       Column(children: <Widget>[
         DiaryHeader(meal: 'Breakfast', calorieValue: 100),
@@ -86,6 +102,7 @@ class _Tab1State extends State<Tab1> {
           Column(
             children: <Widget>[
               DiaryHeader(meal: 'Lunch', calorieValue: 100),
+              FoodList(meal: 'Lunch')
             ],
           )
         ],
@@ -93,13 +110,20 @@ class _Tab1State extends State<Tab1> {
       Column(
         children: <Widget>[
           DiaryHeader(meal: 'Dinner', calorieValue: 100),
-          Column(
-            children: <Widget>[
-              DiaryHeader(meal: 'Snack', calorieValue: 100),
+          FoodList(meal: 'Dinner')
+          ]
+      ),
+      Column(
+        children: <Widget>[
+          DiaryHeader(meal: 'Snack', calorieValue: 100),
+          FoodList(meal: 'Snack')
             ],
-          )
+          ),
+      // ElevatedButton(onPressed: (){
+      //   print(cal);
+      // },
+      //     child: Text('test'))
         ],
-      )
-    ]);
+      );
   }
 }

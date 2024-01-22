@@ -199,23 +199,55 @@ class _LoginPageState extends State<LoginPage> {
                         // Save the form values
                         _formKey.currentState!.save();
 
-                        // Call the signInWithEmailAndPassword method from your service
-                        UserCredential user =
-                            await _authService.signInWithEmailAndPassword(
-                                email: email, password: password);
-
-                        if (user != null) {
-                          // If the login is successful, navigate to the desired page
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TabBarViewMain(),
-                            ),
+                        try {
+                          // Call the signInWithEmailAndPassword method from your service
+                          UserCredential userCredential =
+                              await _authService.signInWithEmailAndPassword(
+                            email: email,
+                            password: password,
                           );
-                        } else {
-                          // Handle unsuccessful login
-                          // Show an error message or take appropriate action
-                          print('Login failed');
+
+                          // If the login is successful, userCredential.user will be not null
+                          if (userCredential.user != null) {
+                            // Navigate to the desired page or perform other actions
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TabBarViewMain(),
+                              ),
+                            );
+                          } else {
+                            // Handle other cases where userCredential.user is null
+                            print("Unexpected error: user is null");
+                          }
+                        } catch (e) {
+                          String errorMessage =
+                              'Invalid email, username or password. Please try again.';
+
+                          // Display the error message in a dialog
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                  'Login Failed',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                content: Text(errorMessage),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       }
                     },

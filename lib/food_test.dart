@@ -16,14 +16,28 @@ class _AddFoodTestState extends State<AddFoodTest> {
   String currentUid = '';
 
 
-  List<String> foods = [
+  List<String> foodItems = [
+    'Egg',
+    'Chicken',
+    'Lechon',
+    'Rice',
     'Milk',
-    'Tuna',
-    'Helllo',
-    'Meow'
+    'Century Tuna',
+    'Whey Protein',
   ];
 
-  List<bool> isCheckedList = [false, false, false, false];
+  List<int> gramsValues = [
+    50,
+    120,
+    200,
+    150,
+    80,
+    75,
+    90,
+  ];
+
+
+  List<bool> isCheckedList = [false, false, false, false, false, false, false, false, false];
 
   @override
   void initState() {
@@ -39,7 +53,8 @@ class _AddFoodTestState extends State<AddFoodTest> {
     });
   }
 
-  @override
+  @
+  override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,6 +65,7 @@ class _AddFoodTestState extends State<AddFoodTest> {
             onPressed: () {
               // Add checked items to Firebase Realtime Database
               addCheckedItemsToFirebase();
+              Navigator.of(context).pop();
             },
           ),
         ],
@@ -69,10 +85,12 @@ class _AddFoodTestState extends State<AddFoodTest> {
       // )
 
       ListView.builder(
-        itemCount: foods.length,
+        itemCount: foodItems.length,
         itemBuilder: (context, index) {
+          int valuesTxt = gramsValues[index];
           return ListTile(
-            title: Text(foods[index]),
+            title: Text(foodItems[index]),
+            subtitle: Text('$valuesTxt'),
             trailing: Checkbox(
               value: isCheckedList[index],
               onChanged: (value) {
@@ -91,9 +109,9 @@ class _AddFoodTestState extends State<AddFoodTest> {
     for (int i = 0; i < isCheckedList.length; i++) {
       if (isCheckedList[i]) {
         // Add the checked item to Firebase Realtime Database
-        databaseReference.child('addedFood').child(widget.meal).child(currentUid).push().set({
-          'food': foods[i],
-          'timestamp': DateTime.now().toUtc().toString(),
+        databaseReference.child('addedFood').child(currentUid).child(widget.meal).push().set({
+          'food': foodItems[i],
+          'cal': gramsValues[i]
         });
       }
     }
