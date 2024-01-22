@@ -12,10 +12,9 @@ class Tab1 extends StatefulWidget {
 }
 
 class _Tab1State extends State<Tab1> {
-  String? cal;
+  String? calculatedBMR;
   String currentUid = "";
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
-
 
   @override
   void initState() {
@@ -24,19 +23,20 @@ class _Tab1State extends State<Tab1> {
     fetchData();
     // writeData();
   }
-  void setUid(){
+
+  void setUid() {
     FirebaseAuthService firebaseAuthService = FirebaseAuthService();
     setState(() {
       currentUid = firebaseAuthService.getCurrentUserUid();
     });
   }
 
-  Future<void> fetchData() async{
+  Future<void> fetchData() async {
     FirebaseService firebaseService = FirebaseService();
-    String? calData = await firebaseService.fetchCal();
+    String? calculatedBMRdata = await firebaseService.fetchCal();
 
     setState(() {
-      cal= calData;
+      calculatedBMR = calculatedBMRdata;
     });
   }
 
@@ -50,30 +50,32 @@ class _Tab1State extends State<Tab1> {
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       Container(
-          color: Colors.white,
-          height: 75,
-          width: 500,
-          child: Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              child: Row(children: <Widget>[
-                Text(
-                    'Total Calories: ',
-                  style: TextStyle(
-                    fontFamily: "Chivo",
-                    fontSize: 30
-                  ),
-
+        color: Colors.white,
+        height: 75,
+        width: 500,
+        child: Container(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Row(
+            children: <Widget>[
+              Text(
+                'Total Calories: ',
+                style: TextStyle(
+                  fontFamily: "Chivo",
+                  fontSize: 30,
                 ),
-                Spacer(),
-                Text(cal!,
-                    style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 30))
-                ,
-                Spacer(),
-              ]
-              )
-          )
+              ),
+              Spacer(),
+              Text(
+                calculatedBMR ?? '', // Use calculatedBMR, handle null case
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 30,
+                ),
+              ),
+              Spacer(),
+            ],
+          ),
+        ),
       ),
       Column(children: <Widget>[
         DiaryHeader(meal: 'Breakfast', calorieValue: 100),
