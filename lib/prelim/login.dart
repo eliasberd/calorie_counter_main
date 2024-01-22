@@ -1,21 +1,16 @@
+<<<<<<< HEAD
 import 'package:calorie_counter_app_design/prelim/signup.dart';
 import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+=======
+>>>>>>> 04b70dd5939ed4705d1c243e2983ef57c01c6678
 import 'package:flutter/material.dart';
+import 'signup.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final FirebaseAuth _authService = FirebaseAuth.instance;
+class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String email = '';
-  String username = '';
   String password = '';
 
   void _navigateToSignUp(BuildContext context) {
@@ -129,61 +124,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 30),
                   ElevatedButton(
+<<<<<<< HEAD
                     onPressed: () async {
+=======
+                    onPressed: () {
+>>>>>>> 04b70dd5939ed4705d1c243e2983ef57c01c6678
                       if (_formKey.currentState!.validate()) {
-                        // Save the form values
-                        _formKey.currentState!.save();
-
-                        try {
-                          // Call the signInWithEmailAndPassword method from your service
-                          UserCredential userCredential =
-                              await _authService.signInWithEmailAndPassword(
-                            email: email,
-                            password: password,
-                          );
-
-                          // If the login is successful, userCredential.user will be not null
-                          if (userCredential.user != null) {
-                            // Navigate to the desired page or perform other actions
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TabBarViewMain(),
-                              ),
-                            );
-                          } else {
-                            // Handle other cases where userCredential.user is null
-                            print("Unexpected error: user is null");
-                          }
-                        } catch (e) {
-                          String errorMessage =
-                              'Invalid email, username or password. Please try again.';
-
-                          // Display the error message in a dialog
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Login Failed',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                content: Text(errorMessage),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
+                        // Implement login logic here
                       }
                     },
                     style: ElevatedButton.styleFrom(
