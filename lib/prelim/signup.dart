@@ -81,8 +81,7 @@ class _SignupState extends State<Signup> {
     }
 
     // Create a new user in Firebase Authentication
-    User? user =
-        await _auth.signUpWithEmailAndPassword(email, password, username);
+    User? user = await _auth.signUpUser(email, password, username);
 
     // If user is not null, the signup was successful
     if (user != null) {
