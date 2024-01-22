@@ -5,7 +5,7 @@ class FirebaseAuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<User?> signUpWithEmailAndPassword(
+  Future<User?> signUpUser(
       String email, String password, String username) async {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
@@ -71,7 +71,6 @@ class FirebaseAuthService {
     User user = _auth.currentUser!;
     return user.uid;
   }
-
 
   /// Initiates a password reset process by sending a reset email to the specified [email].
   /// Returns true if the email is successfully sent, false otherwise.

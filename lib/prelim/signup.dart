@@ -46,8 +46,6 @@ class _SignupState extends State<Signup> {
   }
 
   void _signUp() async {
-    // Show loading indicator before calling signUpWithEmailAndPassword
-
     String email = _emailController.text;
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
@@ -83,11 +81,11 @@ class _SignupState extends State<Signup> {
     }
 
     // Create a new user in Firebase Authentication
-    User? user =
-        await _auth.signUpWithEmailAndPassword(email, password, username);
+    User? user = await _auth.signUpUser(email, password, username);
 
     // If user is not null, the signup was successful
     if (user != null) {
+      print("User account successfully created.");
       // Navigate to the next step in the registration process
       // Navigate to the PersonalInfoForm and pass user information
       Navigator.push(
