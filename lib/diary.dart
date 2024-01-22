@@ -26,7 +26,7 @@ class _Tab1State extends State<Tab1> {
     setUid();
     // writeData();
     fetchCal();
-    fetchBMR();
+    // fetchBMR();
     fetchBreakfast();
 
     databaseReference.child('user/$currentUid/bmr').onValue.listen((event) {
@@ -52,15 +52,15 @@ class _Tab1State extends State<Tab1> {
     });
   }
 
-  Future<void> fetchBMR() async{
-    FirebaseService firebaseService = FirebaseService();
-    String? calculatedBMRdata = await firebaseService.fetchCalcuCal();
-
-    setState(() {
-      calculatedBMR = calculatedBMRdata;
-    });
-
-  }
+  // Future<void> fetchBMR() async{
+  //   FirebaseService firebaseService = FirebaseService();
+  //   String? calculatedBMRdata = await firebaseService.fetchCalcuCal();
+  //
+  //   setState(() {
+  //     calculatedBMR = calculatedBMRdata;
+  //   });
+  //
+  // }
 
   Future<void> fetchBreakfast() async{
     FirebaseService firebaseService = FirebaseService();
@@ -142,11 +142,11 @@ class _Tab1State extends State<Tab1> {
           FoodList(meal: 'Snack')
             ],
           ),
-      // ElevatedButton(onPressed: (){
-      //   print(cal);
-      //   print(aggCalBreakfast);
-      // },
-      //     child: Text('test'))
+      ElevatedButton(onPressed: (){
+        print(cal);
+        print(aggCalBreakfast);
+      },
+          child: Text('test'))
         ],
       );
   }

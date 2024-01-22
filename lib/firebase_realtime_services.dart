@@ -1,6 +1,7 @@
 import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseService {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
@@ -25,35 +26,52 @@ class FirebaseService {
 
   }
 
-  Future<String?> fetchCalcuCal() async {
+  // Future<String?> fetchCalcuCal() async {
+  //   String user = firebaseAuthService.getCurrentUserUid();
+  //   DataSnapshot snapshot = await _database.child('user/$user/cal').get();
+  //
+  //   if (snapshot.value != null) {
+  //     String? cal = snapshot.value as String?;
+  //     return cal;
+  //   }
+  //
+  //   return null;
+  // }
+
+  Future<List<int>> fetchBreakfast() async {
     String user = firebaseAuthService.getCurrentUserUid();
-    DataSnapshot snapshot = await _database.child('user/$user/cal').get();
+    DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('addedFood/$user/Breakfast');
+    List<int>? dataLists = [];
+    int? dataList;
+    int? itemLength;
+    //
+    // DataSnapshot snapshot = await databaseReference.get();
+    // if(snapshot.value !=null){
+    //   itemLength = snapshot.value?.length;
+    // }
 
-    if (snapshot.value != null) {
-      String? cal = snapshot.value as String?;
-      return cal;
-    }
+    for(int i = 0 ; i <= 6; i++){
+      DataSnapshot snapshot = await databaseReference.child('$i').child('cal').get();
+      if(snapshot.value != null){
+        dataLists.add(snapshot.value as int);
 
-    return null;
-  }
-
-  Future<List<int>> fetchBreakfast() async{
-    List<int> dataList =[];
-    String user = firebaseAuthService.getCurrentUserUid();
-    DataSnapshot snapshot = await _database.child('addedFood').child('$user').child('Breakfast').get();
-
-    if(snapshot.value != null){
-      Map<dynamic,dynamic>? values = snapshot.value as Map<dynamic,dynamic>;
-      values.forEach((key, value) {
-        dataList.add(value);
       }
-      );
-      return dataList;
+      // return [];
     }
-    return [];
+    return dataLists;
 
 
   }
-  
 
+    // DataSnapshot snapshot = await databaseReference.get();
+    // final value = snapshot.value;
+    // if(value != null && snapshot.value is Map){
+    //   Map<String,dynamic> dataMap = snapshot.value as Map<String, dynamic>;
+    //   itemLength = dataMap.length;
+    //   return itemLength;
+    // }
+    //   return 0;
+    // }
 }
+
+
