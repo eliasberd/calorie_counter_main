@@ -1,6 +1,5 @@
 import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 class AddFoodTest extends StatefulWidget {
@@ -14,8 +13,6 @@ class AddFoodTest extends StatefulWidget {
 class _AddFoodTestState extends State<AddFoodTest> {
   final databaseReference = FirebaseDatabase.instance.ref();
   String currentUid = '';
-
-
   List<String> foodItems = [
     'Egg',
     'Chicken',
@@ -25,7 +22,6 @@ class _AddFoodTestState extends State<AddFoodTest> {
     'Century Tuna',
     'Whey Protein',
   ];
-
   List<int> gramsValues = [
     50,
     120,
@@ -35,30 +31,36 @@ class _AddFoodTestState extends State<AddFoodTest> {
     75,
     90,
   ];
+  List<bool> isCheckedList = List.generate(7, (index) => false);
 
-
-  List<bool> isCheckedList = [false, false, false, false, false, false, false, false, false];
+  List<String> filteredFoodItems = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setUid();
+    // Initialize filteredFoodItems with all foodItems initially
+    filteredFoodItems = List.from(foodItems);
   }
 
-  void setUid(){
+  void setUid() {
     FirebaseAuthService firebaseAuthService = FirebaseAuthService();
     setState(() {
       currentUid = firebaseAuthService.getCurrentUserUid();
     });
   }
 
-  @
-  override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Checklist'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.check),
@@ -70,37 +72,103 @@ class _AddFoodTestState extends State<AddFoodTest> {
           ),
         ],
       ),
-      body:
-      // FirebaseAnimatedList(
-      //   query: databaseReference.child('food'),
-      //   shrinkWrap: true,
-      //   itemBuilder: (context, snapshot, index, animation){
-      //     return ListTile(
-      //       title: Text(
-      //         snapshot.child('name').value.toString()
-      //       ),
-      //     );
-      //   }
-      //
-      // )
-
-      ListView.builder(
-        itemCount: foodItems.length,
-        itemBuilder: (context, index) {
-          int valuesTxt = gramsValues[index];
-          return ListTile(
-            title: Text(foodItems[index]),
-            subtitle: Text('$valuesTxt'),
-            trailing: Checkbox(
-              value: isCheckedList[index],
-              onChanged: (value) {
-                setState(() {
-                  isCheckedList[index] = value!;
-                });
-              },
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search food...',
+                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  ),
+                  onChanged: (value) {
+                    // Filter the food items based on the search value
+                    setState(() {
+                      filteredFoodItems = foodItems
+                          .where((item) => item.toLowerCase().contains(value.toLowerCase()))
+                          .toList();
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: filteredFoodItems.length,
+                  itemBuilder: (context, index) {
+                    int valuesTxt = gramsValues[foodItems.indexOf(filteredFoodItems[index])];
+                    return InkWell(
+                      onTap: () {
+                        // Handle item click here
+                        // You can add custom logic or navigation
+                      },
+                      child: Card(
+                        color: Color(0xFFD3D3D3), // Set the color to #D3D3D3
+                        elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        margin: EdgeInsets.all(8.0),
+                        child: ListTile(
+                          title: Text(
+                            filteredFoodItems[index],
+                            style: TextStyle(
+                              color: Colors.black, // Set the color of the text
+                              fontWeight: FontWeight.bold, // Set the text to bold
+                            ),
+                          ),
+                          subtitle: Text(
+                            '$valuesTxt',
+                            style: TextStyle(
+                              color: Colors.black, // Set the color of the values text
+                              fontWeight: FontWeight.bold, // Set the text to bold
+                            ),
+                          ),
+                          trailing: Checkbox(
+                            value: isCheckedList[foodItems.indexOf(filteredFoodItems[index])],
+                            onChanged: (value) {
+                              setState(() {
+                                isCheckedList[foodItems.indexOf(filteredFoodItems[index])] = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            left: 0,
+            bottom: 0,
+            child: CustomPaint(
+              painter: TrianglePainter(isReversed: true),
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+              ),
             ),
-          );
-        },
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: CustomPaint(
+              painter: TrianglePainter(),
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -111,9 +179,45 @@ class _AddFoodTestState extends State<AddFoodTest> {
         // Add the checked item to Firebase Realtime Database
         databaseReference.child('addedFood').child(currentUid).child(widget.meal).child('$i').set({
           'food': foodItems[i],
-          'cal': gramsValues[i]
+          'cal': gramsValues[i],
         });
       }
     }
   }
 }
+
+class TrianglePainter extends CustomPainter {
+  final bool isReversed;
+
+  TrianglePainter({this.isReversed = false});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [Color(0xFFFF5959), Color(0xFFFF2E63)],
+      ).createShader(Rect.fromPoints(Offset(0, 0), Offset(size.width, 0)));
+
+    final Path path = Path();
+    if (isReversed) {
+      path.moveTo(size.width, size.height);
+      path.lineTo(size.width, 0);
+      path.lineTo(0, size.height / 2);
+    } else {
+      path.moveTo(0, size.height);
+      path.lineTo(0, 0);
+      path.lineTo(size.width, size.height / 2);
+    }
+
+    path.close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
