@@ -54,7 +54,15 @@ class _AddFoodTestState extends State<AddFoodTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checklist'),
+        elevation: 0,
+        backgroundColor: Colors.redAccent,
+        title: Text(
+            'Add Food',
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontSize: 28
+          ),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

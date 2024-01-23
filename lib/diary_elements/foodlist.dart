@@ -29,14 +29,14 @@ class FoodListState extends State<FoodList>{
               snapshot.child('food').value.toString(),
               style: TextStyle(
                 fontFamily: 'Poppins',
-                  fontSize: 25
+                  fontSize: 20
               ),
             ),
             trailing: Text(
                 snapshot.child('cal').value.toString(),
               style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 15
+                  fontFamily: 'Chivo',
+                  fontSize: 20
               ),
             ),
           );

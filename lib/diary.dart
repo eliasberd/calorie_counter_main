@@ -197,10 +197,10 @@ class _Tab1State extends State<Tab1> {
           height: 75,
           width: 500,
           child: Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: EdgeInsets.only(left: 30, right: 20),
               child: Row(children: <Widget>[
                 Text(
-                    'Total Calories: ',
+                    'Daily Goal: ',
                   style: TextStyle(
                     fontFamily: "Chivo",
                     fontSize: 30
@@ -213,7 +213,7 @@ class _Tab1State extends State<Tab1> {
                     builder: (context, snapshot){
                       return Text('${snapshot.data}',
                       style: TextStyle(
-                        fontFamily: 'Chivo',
+                        fontFamily: 'Poppins',
                         fontSize: 30
                       ),
                       );
@@ -321,16 +321,6 @@ class _Tab1State extends State<Tab1> {
         print(aggCalTotal);
         print(userTotalCal);
         print(newCal);
-        setState(() {
-          setUid();
-          // writeData();
-          fetchCal();
-          // fetchBMR();
-          fetchBreakfast();
-          fetchLunch();
-          fetchDinner();
-          fetchSnack();
-        });
 
         print('----------------------------');
 

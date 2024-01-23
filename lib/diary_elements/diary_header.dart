@@ -19,7 +19,7 @@ class DiaryHeader extends StatelessWidget{
               Padding(padding: EdgeInsets.only(left: 0),
                   child:
                   SizedBox(
-                    width:200,
+                    width:225,
                     child: Text(meal,
                         style: TextStyle(
                             fontFamily: 'Poppins',
