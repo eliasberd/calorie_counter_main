@@ -1,6 +1,5 @@
 import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:calorie_counter_app_design/prelim/signup.dart';
-import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +17,9 @@ class _LoginPageState extends State<LoginPage> {
   String email = '';
   String username = '';
   String password = '';
+
+  bool isPasswordVisible = false;
+  bool isConfirmPasswordVisible = false;
 
   void _navigateToSignUp(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
@@ -100,6 +102,19 @@ class _LoginPageState extends State<LoginPage> {
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isConfirmPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.red[200],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        },
+                      ),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -110,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                     onSaved: (value) {
                       password = value!;
                     },
-                    obscureText: true,
+                    obscureText: !isPasswordVisible,
                   ),
                   SizedBox(height: 10),
                   Center(
@@ -132,7 +147,6 @@ class _LoginPageState extends State<LoginPage> {
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-
                         // Implement login logic here;
 
                         // Save the form values
@@ -188,7 +202,6 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           );
                         }
-
                       }
                     },
                     style: ElevatedButton.styleFrom(
