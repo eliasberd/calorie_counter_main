@@ -26,17 +26,21 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(onWillPop: () async{
+      return false;
+      },
+        child:
+    Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.redAccent,
         title: Text(
-          tabTitle[_currentIndex],
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 28,
-          )
+            tabTitle[_currentIndex],
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 28,
+            )
         ),
         actions: [
           IconButton(onPressed: (){
@@ -56,17 +60,22 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.book,
-            size: 40,),
+              size: 40,),
             label: 'Diary',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard,
-            size: 40),
+                size: 40),
             label: 'Dash',
           ),
         ],
       ),
+    )
+
+
     );
+
+
   }
 }
 

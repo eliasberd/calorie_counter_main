@@ -11,40 +11,45 @@ class DiaryHeader extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
         color: Colors.redAccent,
-        height: 50,
+        height: 60,
         margin: EdgeInsets.only(top: 5),
         padding: EdgeInsets.only(left: 15, right: 10),
         child:  Row(
             children: [
               Padding(padding: EdgeInsets.only(left: 0),
-                  child:Text(meal,
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 23,
-                          color: Colors.white
-                      )
-                  )
+                  child:
+                  SizedBox(
+                    width:200,
+                    child: Text(meal,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 23,
+                            color: Colors.white
+                        )
+                    )
+                  ),
+
               ),
               Spacer(flex: 3),
-              ElevatedButton(
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      debugPrint(meal.toString());
-                      return AddFoodTest(meal:meal);
-                    }
+              Padding(padding: EdgeInsets.only(bottom:7),
+                child: IconButton(
+                    color: Colors.white,
+                    onPressed: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                        debugPrint(meal.toString());
+                        return AddFoodTest(meal:meal);
+                      }
 
-                    ));
-                  },
-                  child: Text(
-                    'ADD FOOD',
-                    style: TextStyle(
-                        fontFamily: 'Chivo',
-                        fontSize: 19,
-                        color: Colors.white
-                    ),
-                  )
+                      ));
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      size: 30,
+                      weight: 200,
+                    )
+                )
               ),
-              Spacer(),
+              Spacer(flex: 5,),
               Text(
                 '$calorieValue',
                 style: TextStyle(
