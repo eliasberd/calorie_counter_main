@@ -22,7 +22,8 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
   String selectedLevel = '';
 
   var formKey = GlobalKey<FormState>();
-  BMRCalculator calculator = BMRCalculator(); // Create an instance of BMRCalculator
+  BMRCalculator calculator =
+      BMRCalculator(); // Create an instance of BMRCalculator
 
   List<String> activityLevelList = [
     'Sedentary',
@@ -45,91 +46,92 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
           },
         ),
       ),
-      body: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 30, left: 30, right: 30),
-              child: Text(
-                "Choose the category that best represents your average weekly activity level:",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10, left: 30, right: 30),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.red[200],
-              ),
-              child: Column(
-                children: activityLevelList
-                    .map(
-                      (level) => RadioListTile(
-                        title: Text(level),
-                        value: level,
-                        groupValue: selectedLevel,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedLevel = value.toString();
-                          });
-                        },
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-            SizedBox(height: 40),
-            Container(
-              width: 340,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () async {
-                  var isFormValid = formKey.currentState!.validate();
-                  if (isFormValid) {
-                    //calculate the BMR
-                    int calculatedBMR = calculator.calculateBMR(
-                      age: widget.user.age,
-                      weight: widget.user.weight,
-                      height: widget.user.height,
-                      sex: widget.user.sex,
-                      activityLevel: selectedLevel,
-                     
-                    );
-                    // Call the onSubmit callback with selectedLevel
-                    widget.onSubmit(selectedLevel);
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BmrOutput(
-                          selectedLevel: selectedLevel,
-                          calculatedBMR: calculatedBMR.toDouble(), 
-                        ),
-                      ),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red[400],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                ),
-                child: const Text(
-                  'Submit',
+      body: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 30, left: 30, right: 30),
+                child: Text(
+                  "Choose the category that best represents your average weekly activity level:",
                   style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
                   ),
                 ),
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.only(top: 10, left: 30, right: 30),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.red[200],
+                ),
+                child: Column(
+                  children: activityLevelList
+                      .map(
+                        (level) => RadioListTile(
+                          title: Text(level),
+                          value: level,
+                          groupValue: selectedLevel,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedLevel = value.toString();
+                            });
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+              SizedBox(height: 40),
+              Container(
+                width: 340,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    var isFormValid = formKey.currentState!.validate();
+                    if (isFormValid) {
+                      //calculate the BMR
+                      int calculatedBMR = calculator.calculateBMR(
+                        age: widget.user.age,
+                        weight: widget.user.weight,
+                        height: widget.user.height,
+                        sex: widget.user.sex,
+                        activityLevel: selectedLevel,
+                      );
+                      // Call the onSubmit callback with selectedLevel
+                      widget.onSubmit(selectedLevel);
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BmrOutput(
+                            selectedLevel: selectedLevel,
+                            calculatedBMR: calculatedBMR.toDouble(),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red[400],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                  ),
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
