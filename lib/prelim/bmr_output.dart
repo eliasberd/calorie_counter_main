@@ -114,7 +114,8 @@ class _BmrOutputState extends State<BmrOutput> {
             ElevatedButton(
               onPressed: () {
                 databaseReference.child('user').child(currentUid).set({
-                  "bmr" : widget.calculatedBMR
+                  "bmr" : widget.calculatedBMR,
+                  'varBmr': widget.calculatedBMR
                   });
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {

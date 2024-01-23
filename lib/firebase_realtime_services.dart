@@ -26,6 +26,24 @@ class FirebaseService {
 
   }
 
+  Future<int?> fetchVarCal() async {
+    String user = firebaseAuthService.getCurrentUserUid();
+    DataSnapshot snapshot = await _database.child('user/$user/varBmr').get();
+
+    if (snapshot.value != null) {
+      try {
+        String cal = snapshot.value.toString();
+        int intValue = int.parse(cal);
+        return intValue;
+      } catch(e){
+        print('Error');
+        return null;
+      }
+
+    }
+
+  }
+
   // Future<String?> fetchCalcuCal() async {
   //   String user = firebaseAuthService.getCurrentUserUid();
   //   DataSnapshot snapshot = await _database.child('user/$user/cal').get();

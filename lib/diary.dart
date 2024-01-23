@@ -14,6 +14,7 @@ class Tab1 extends StatefulWidget {
 
 class _Tab1State extends State<Tab1> {
   int cal = 0;
+  int varCal = 0;
   int newCal = 0;
   bool hasUpdated = false;
   List<int> aggCalBreakfast = [];
@@ -42,7 +43,7 @@ class _Tab1State extends State<Tab1> {
     fetchDinner();
     fetchSnack();
 
-    databaseReference.child('user/$currentUid/bmr').onValue.listen((event) {
+    databaseReference.child('user/$currentUid/varBmr').onValue.listen((event) {
       String newData = event.snapshot.value.toString();
       _dataController.add(newData);
 
@@ -169,7 +170,6 @@ class _Tab1State extends State<Tab1> {
     }
     setState(() {
       userTotalCal = totalCal;
-      decCal(userTotalCal);
     });
   }
 
@@ -224,14 +224,24 @@ class _Tab1State extends State<Tab1> {
                 Spacer(),
                 IconButton(onPressed: (){
                   if(!hasUpdated){
+                    if(userTotalCal <= cal){
+                      decCal(userTotalCal);
+                    } else{
+                      setState(() {
+                        newCal = 0;
+                      });
+                    }
+
                     databaseReference.child('user').child(currentUid).update({
-                      'bmr': newCal
+                      'varBmr': newCal
                     });
+
                     setState(() {
                       hasUpdated = true;
+
                     });
                   }
-
+                  
                 }, icon: Icon(Icons.restart_alt))
               ]
               )
@@ -263,6 +273,40 @@ class _Tab1State extends State<Tab1> {
           FoodList(meal: 'Snack')
             ],
           ),
+      SizedBox(height: 30,),
+      ElevatedButton(
+        style: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(const Size(150, 40)),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        ),
+          onPressed: (){
+        databaseReference.child('user').child(currentUid).update({
+          'varBmr':cal
+        });
+
+        databaseReference.child('addedFood').child(currentUid).remove().then((_){
+          print('Remove objects');
+        });
+
+        setState(() {
+          hasUpdated = false;
+
+        });
+
+
+
+      }, child: Text(
+          'Reset Day',
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 20,
+        ),
+      )
+      ),
       ElevatedButton(onPressed: (){
         print('----------------------------');
         print(cal);
@@ -277,6 +321,17 @@ class _Tab1State extends State<Tab1> {
         print(aggCalTotal);
         print(userTotalCal);
         print(newCal);
+        setState(() {
+          setUid();
+          // writeData();
+          fetchCal();
+          // fetchBMR();
+          fetchBreakfast();
+          fetchLunch();
+          fetchDinner();
+          fetchSnack();
+        });
+
         print('----------------------------');
 
       },
