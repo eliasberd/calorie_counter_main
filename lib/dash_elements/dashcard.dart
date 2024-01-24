@@ -14,8 +14,9 @@ class DashboardCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16),
         width: boxwidth,
-        child: Center(child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Center(
+          child: Column(
+
           children: [
             Icon(
               icon,

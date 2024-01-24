@@ -201,7 +201,9 @@ class _Tab1State extends State<Tab1> {
                     fontFamily: "Chivo",
                     fontSize: 30
                   ),
-
+                ),
+                SizedBox(
+                  width: 5,
                 ),
                 StreamBuilder<String>(
                     stream: _dataController.stream,
@@ -217,27 +219,34 @@ class _Tab1State extends State<Tab1> {
                 ),
 
                 Spacer(),
-                IconButton(onPressed: (){
-                  if(!hasUpdated){
-                    if(userTotalCal <= cal){
-                      decCal(userTotalCal);
-                    } else{
+                Visibility(visible: !hasUpdated,
+                    child:
+                  IconButton(onPressed: (){
+                    if(!hasUpdated){
+                      if(userTotalCal <= cal){
+                        decCal(userTotalCal);
+                      } else{
+                        setState(() {
+                          newCal = 0;
+                        });
+                      }
+
+                      databaseReference.child('user').child(currentUid).update({
+                        'varBmr': newCal
+                      });
+
                       setState(() {
-                        newCal = 0;
+                        hasUpdated = true;
+
                       });
                     }
-
-                    databaseReference.child('user').child(currentUid).update({
-                      'varBmr': newCal
-                    });
-
-                    setState(() {
-                      hasUpdated = true;
-
-                    });
-                  }
-                  
-                }, icon: Icon(Icons.restart_alt))
+                    },
+                      icon: Icon(
+                        Icons.restart_alt,
+                        color: Colors.redAccent,
+                      )
+                  )
+                ),
               ]
               )
           )
@@ -256,6 +265,7 @@ class _Tab1State extends State<Tab1> {
           )
         ],
       ),
+
       Column(
         children: <Widget>[
           DiaryHeader(meal: 'Dinner', calorieValue: dinnerVal),
@@ -271,7 +281,7 @@ class _Tab1State extends State<Tab1> {
       SizedBox(height: 30,),
       ElevatedButton(
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size(150, 40)),
+          minimumSize: MaterialStateProperty.all(const Size(150, 50)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),

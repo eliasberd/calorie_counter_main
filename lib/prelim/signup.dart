@@ -174,6 +174,7 @@ class _SignupState extends State<Signup> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email, color: Colors.red[200]),

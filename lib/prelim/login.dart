@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email, color: Colors.red[200]),
                       labelText: 'Email Address',

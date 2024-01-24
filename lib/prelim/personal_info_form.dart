@@ -102,6 +102,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                     },
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _heightController,
                     decoration: InputDecoration(labelText: 'Height (cm)'),
                     validator: (value) {
@@ -115,6 +116,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                     },
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _weightController,
                     decoration: InputDecoration(labelText: 'Weight (kg)'),
                     validator: (value) {
@@ -128,6 +130,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                     },
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _ageController,
                     decoration: InputDecoration(labelText: 'Age'),
                     validator: (value) {

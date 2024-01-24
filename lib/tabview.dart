@@ -15,7 +15,7 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
 
   final List<Widget> _tabs = [
     Tab1(),
-    Tab2(goal: 2000, food: 1500, exercise: 300),
+    Tab2(),
   ];
 
   void _onTabTapped(int index) {
