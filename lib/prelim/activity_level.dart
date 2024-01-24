@@ -5,7 +5,7 @@ import 'bmr_calculator.dart';
 
 class ActivityLevelForm extends StatefulWidget {
   final Function(String) onSubmit;
-  final EndUser user; // Pass EndUser instance as a parameter
+  final EndUser user;
 
   const ActivityLevelForm({
     Key? key,
@@ -21,8 +21,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
   String selectedLevel = '';
 
   var formKey = GlobalKey<FormState>();
-  BMRCalculator calculator =
-      BMRCalculator(); // Create an instance of BMRCalculator
+  BMRCalculator calculator = BMRCalculator();
 
   List<String> activityLevelList = [
     'Sedentary',
