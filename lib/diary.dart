@@ -3,7 +3,6 @@ import 'package:calorie_counter_app_design/diary_elements/diary_header.dart';
 import 'package:calorie_counter_app_design/diary_elements/foodlist.dart';
 import 'package:calorie_counter_app_design/firebase_realtime_services.dart';
 import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,6 @@ class Tab1 extends StatefulWidget {
 
 class _Tab1State extends State<Tab1> {
   int cal = 0;
-  int varCal = 0;
   int newCal = 0;
   bool hasUpdated = false;
   List<int> aggCalBreakfast = [];
@@ -35,9 +33,7 @@ class _Tab1State extends State<Tab1> {
   void initState() {
     super.initState();
     setUid();
-    // writeData();
     fetchCal();
-    // fetchBMR();
     fetchBreakfast();
     fetchLunch();
     fetchDinner();
@@ -197,7 +193,7 @@ class _Tab1State extends State<Tab1> {
           height: 75,
           width: 500,
           child: Container(
-              padding: EdgeInsets.only(left: 30, right: 20),
+              padding: EdgeInsets.only(left: 70, right: 25),
               child: Row(children: <Widget>[
                 Text(
                     'Daily Goal: ',
@@ -207,7 +203,6 @@ class _Tab1State extends State<Tab1> {
                   ),
 
                 ),
-                Spacer(),
                 StreamBuilder<String>(
                     stream: _dataController.stream,
                     builder: (context, snapshot){
@@ -294,6 +289,11 @@ class _Tab1State extends State<Tab1> {
 
         setState(() {
           hasUpdated = false;
+          breakfastVal = 0;
+          lunchVal = 0;
+          dinnerVal = 0;
+          snackVal = 0;
+          userTotalCal = 0;
 
         });
 

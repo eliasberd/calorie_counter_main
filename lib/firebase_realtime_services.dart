@@ -1,7 +1,6 @@
 import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 
 class FirebaseService {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
@@ -26,23 +25,6 @@ class FirebaseService {
 
   }
 
-  Future<int?> fetchVarCal() async {
-    String user = firebaseAuthService.getCurrentUserUid();
-    DataSnapshot snapshot = await _database.child('user/$user/varBmr').get();
-
-    if (snapshot.value != null) {
-      try {
-        String cal = snapshot.value.toString();
-        int intValue = int.parse(cal);
-        return intValue;
-      } catch(e){
-        print('Error');
-        return null;
-      }
-
-    }
-
-  }
 
   // Future<String?> fetchCalcuCal() async {
   //   String user = firebaseAuthService.getCurrentUserUid();

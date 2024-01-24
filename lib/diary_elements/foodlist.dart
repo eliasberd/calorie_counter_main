@@ -23,6 +23,7 @@ class FoodListState extends State<FoodList>{
         child: FirebaseAnimatedList(
         query: databaseReference.child('addedFood').child(currentUid).child(widget.meal),
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, snapshot, index, animation){
           return ListTile(
             title: Text(
