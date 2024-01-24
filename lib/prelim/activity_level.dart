@@ -1,5 +1,4 @@
 import 'package:calorie_counter_app_design/prelim/bmr_output.dart';
-import 'package:calorie_counter_app_design/prelim/login.dart';
 import 'package:calorie_counter_app_design/prelim/user_auth/end_user.dart';
 import 'package:flutter/material.dart';
 import 'bmr_calculator.dart';
