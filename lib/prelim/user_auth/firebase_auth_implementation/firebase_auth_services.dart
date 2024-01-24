@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthService {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<User?> signUpUser(
       String email, String password, String username) async {
@@ -44,23 +44,6 @@ class FirebaseAuthService {
     }
   }
 
-  /// Signs the current user out.
-  ///
-  /// This function calls the Firebase authentication service to sign out the
-  /// currently authenticated user.
-  ///
-  /// Returns:
-  ///   - A [Future<void>] representing the completion of the sign-out process.
-  Future<void> signOut() async {
-    // Call the Firebase authentication service to sign out the user
-    await _auth.signOut();
-  }
-
-  /* Future<bool> isUserLoggedIn() async {
-    User? user = _auth.currentUser;
-    return user != null;
-  } */
-
   // A function that gets the current user
   User getCurrentUser() {
     User user = _auth.currentUser!;
@@ -70,20 +53,5 @@ class FirebaseAuthService {
   String getCurrentUserUid() {
     User user = _auth.currentUser!;
     return user.uid;
-  }
-
-  /// Initiates a password reset process by sending a reset email to the specified [email].
-  /// Returns true if the email is successfully sent, false otherwise.
-  Future<bool> passwordReset({required String email}) async {
-    try {
-      // Send password reset email using Firebase authentication
-      await _auth.sendPasswordResetEmail(email: email);
-
-      // Password reset email sent successfully
-      return true;
-    } on FirebaseAuthException {
-      // An error occurred during password reset
-      return false;
-    }
   }
 }

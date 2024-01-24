@@ -1,12 +1,11 @@
 import 'package:calorie_counter_app_design/prelim/bmr_output.dart';
-import 'package:calorie_counter_app_design/prelim/login.dart';
 import 'package:calorie_counter_app_design/prelim/user_auth/end_user.dart';
 import 'package:flutter/material.dart';
 import 'bmr_calculator.dart';
 
 class ActivityLevelForm extends StatefulWidget {
   final Function(String) onSubmit;
-  final EndUser user; // Pass EndUser instance as a parameter
+  final EndUser user;
 
   const ActivityLevelForm({
     Key? key,
@@ -22,8 +21,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
   String selectedLevel = '';
 
   var formKey = GlobalKey<FormState>();
-  BMRCalculator calculator =
-      BMRCalculator(); // Create an instance of BMRCalculator
+  BMRCalculator calculator = BMRCalculator();
 
   List<String> activityLevelList = [
     'Sedentary',
