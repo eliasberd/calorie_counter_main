@@ -42,14 +42,7 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
               fontSize: 28,
             )
         ),
-        actions: [
-          IconButton(onPressed: (){
-            setState(() {
 
-            });
-          },
-              icon: Icon(Icons.restart_alt))
-        ],
       ),
       body: SingleChildScrollView(
         child: _tabs[_currentIndex],
