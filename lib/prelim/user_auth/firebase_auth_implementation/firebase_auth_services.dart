@@ -43,4 +43,15 @@ class FirebaseAuthService {
       return null;
     }
   }
+
+  // A function that gets the current user
+  User getCurrentUser() {
+    User user = _auth.currentUser!;
+    return user;
+  }
+
+  String getCurrentUserUid() {
+    User user = _auth.currentUser!;
+    return user.uid;
+  }
 }
