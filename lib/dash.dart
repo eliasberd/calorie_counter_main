@@ -57,12 +57,21 @@ class _Tab2State extends State<Tab2> {
     try {
       DataSnapshot dataSnapshot = await databaseReference.child('bmr').get();
 
-      if (dataSnapshot.value != null) {
-        String bmrFromRealtime = dataSnapshot.value.toString();
 
-        setState(() {
-          userData['bmr'] = bmrFromRealtime;
-        });
+      if (dataSnapshot.value != null) {
+        try{
+          String bmrFromRealtime = dataSnapshot.value.toString();
+          int intVal = int.parse(bmrFromRealtime);
+          setState(() {
+            userData['bmr'] = intVal;
+          });
+
+        } catch(e){
+          print("Error parse");
+          return null;
+        }
+
+
       } else {
         print('No "bmr" found in Realtime Database');
       }
@@ -108,9 +117,9 @@ class _Tab2State extends State<Tab2> {
     String firstname = userData['firstname'] ?? 'N/A';
     String lastname = userData['lastname'] ?? 'N/A';
     String username = userData['username'] ?? 'N/A';
-    int height = userData['height'] ?? 0;
-    int weight = userData['weight'] ?? 0;
-    String bmr = userData['bmr'] ?? 'N/A';
+    double height = userData['height'] ?? 0;
+    double weight = userData['weight'] ?? 0;
+    int bmr = userData['bmr'] ?? 0;
 
     // Build the UI
     return Column(
@@ -200,7 +209,8 @@ class _Tab2State extends State<Tab2> {
 
                                           print('Success');
                                         },
-                                        child: Text('Update'))
+                                        child: Text('Update')
+                                    )
                                   ],
                                 );
                               });
@@ -226,6 +236,10 @@ class _Tab2State extends State<Tab2> {
         buildInfoBox('Username', username),
         buildInfoBox('Height', height.toString()),
         buildInfoBox('Weight', weight.toString()),
+        ElevatedButton(onPressed: (){
+          print(bmr);
+
+        }, child: Text('test'))
       ],
     );
   }

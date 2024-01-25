@@ -107,7 +107,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                         MaterialPageRoute(
                           builder: (context) => BmrOutput(
                             selectedLevel: selectedLevel,
-                            calculatedBMR: calculatedBMR.toDouble(),
+                            calculatedBMR: calculatedBMR,
                           ),
                         ),
                       );

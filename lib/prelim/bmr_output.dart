@@ -7,7 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 class BmrOutput extends StatefulWidget {
   final String selectedLevel;
-  final double calculatedBMR;
+  final int calculatedBMR;
 
   BmrOutput({
     required this.selectedLevel,
@@ -114,6 +114,7 @@ class _BmrOutputState extends State<BmrOutput> {
             ElevatedButton(
               onPressed: () {
                 databaseReference.child('user').child(currentUid).set({
+
                   "bmr" : widget.calculatedBMR.toInt(),
                   'varBmr': widget.calculatedBMR.toInt()
                   });

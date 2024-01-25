@@ -323,26 +323,17 @@ class _Tab1State extends State<Tab1> {
 
         ///////for testing///////
       ),
-      // ElevatedButton(onPressed: (){
-      //   print('----------------------------');
-      //   print(cal);
-      //   print(aggCalBreakfast);
-      //   print(aggCalLunch);
-      //   print(aggCalDinner);
-      //   print(aggCalSnack);
-      //   print(breakfastVal);
-      //   print(lunchVal);
-      //   print(dinnerVal);
-      //   print(snackVal);
-      //   print(aggCalTotal);
-      //   print(userTotalCal);
-      //   print(newCal);
-      //
-      //   print('----------------------------');
-      //
-      // },
-      //
-      //     child: Text('test'))
+
+      ElevatedButton(onPressed: (){
+        print('----------------------------');
+        print(cal);
+
+
+        print('----------------------------');
+
+      },
+
+          child: Text('test'))
 
 
         ],
