@@ -252,7 +252,7 @@ class _Tab1State extends State<Tab1> {
           )
       ),
       Column(children: <Widget>[
-        DiaryHeader(meal: 'Breakfast', calorieValue: userTotalCal),
+        DiaryHeader(meal: 'Breakfast', calorieValue: breakfastVal),
         FoodList(meal: 'Breakfast')
       ]),
       Column(

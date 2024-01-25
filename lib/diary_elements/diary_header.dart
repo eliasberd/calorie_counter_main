@@ -45,11 +45,10 @@ class DiaryHeader extends StatelessWidget{
                     icon: Icon(
                       Icons.add,
                       size: 30,
-                      weight: 200,
-                    )
+                    ),
                 )
               ),
-              Spacer(flex: 5,),
+              Spacer(flex: 6),
               Text(
                 '$calorieValue',
                 style: TextStyle(
