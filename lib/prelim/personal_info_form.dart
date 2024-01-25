@@ -1,10 +1,8 @@
 import 'package:calorie_counter_app_design/prelim/user_auth/end_user.dart';
 import 'package:calorie_counter_app_design/prelim/user_data_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'components/continue_button.dart';
 import 'activity_level.dart';
-
 import 'package:flutter/material.dart';
 
 class PersonalInfoForm extends StatefulWidget {
@@ -22,7 +20,7 @@ class PersonalInfoForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PersonalInfoFormState createState() => _PersonalInfoFormState();
+  State<PersonalInfoForm> createState() => _PersonalInfoFormState();
 }
 
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
@@ -43,7 +41,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       appBar: AppBar(
         backgroundColor: Colors.red[400],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(
                 context); // Navigate back to the previous screen (Signup)
@@ -54,13 +52,13 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         child: Form(
           key: _formKey,
           child: Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: Padding(
-              padding: EdgeInsets.all(30),
+              padding: const EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Fill up your personal information',
                     style: TextStyle(
                       fontSize: 15.0,
@@ -70,7 +68,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   ),
                   TextFormField(
                     controller: _firstNameController,
-                    decoration: InputDecoration(labelText: 'First Name'),
+                    decoration: const InputDecoration(labelText: 'First Name'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'First Name is required';
@@ -83,7 +81,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   ),
                   TextFormField(
                     controller: _lastNameController,
-                    decoration: InputDecoration(labelText: 'Last Name'),
+                    decoration: const InputDecoration(labelText: 'Last Name'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Last Name is required';
@@ -96,7 +94,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   ),
                   TextFormField(
                     controller: _suffixController,
-                    decoration: InputDecoration(labelText: 'Suffix (optional)'),
+                    decoration: const InputDecoration(labelText: 'Suffix (optional)'),
                     onSaved: (value) {
                       _suffixController.text = value!;
                     },
@@ -104,7 +102,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   TextFormField(
                     keyboardType: TextInputType.number,
                     controller: _heightController,
-                    decoration: InputDecoration(labelText: 'Height (cm)'),
+                    decoration: const InputDecoration(labelText: 'Height (cm)'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Height is required';
@@ -118,7 +116,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   TextFormField(
                     keyboardType: TextInputType.number,
                     controller: _weightController,
-                    decoration: InputDecoration(labelText: 'Weight (kg)'),
+                    decoration: const InputDecoration(labelText: 'Weight (kg)'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Weight is required';
@@ -132,7 +130,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   TextFormField(
                     keyboardType: TextInputType.number,
                     controller: _ageController,
-                    decoration: InputDecoration(labelText: 'Age'),
+                    decoration: const InputDecoration(labelText: 'Age'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Age is required';
@@ -143,7 +141,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                       _ageController.text = value!;
                     },
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     child: Text('Sex:'),
                   ),
@@ -158,7 +156,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                           });
                         },
                       ),
-                      Text('Male'),
+                      const Text('Male'),
                       Radio(
                         value: 'Female',
                         groupValue: sex,
@@ -168,10 +166,10 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                           });
                         },
                       ),
-                      Text('Female'),
+                      const Text('Female'),
                     ],
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   ContinueButton(
                     onPressed: () async {
                       String userId = FirebaseAuth.instance.currentUser!.uid;

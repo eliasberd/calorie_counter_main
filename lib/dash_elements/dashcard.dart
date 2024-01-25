@@ -6,13 +6,13 @@ class DashboardCard extends StatelessWidget {
   final IconData icon;
   final double boxwidth;
 
-  DashboardCard({required this.title, required this.value, required this.icon, required this.boxwidth});
+  const DashboardCard({super.key, required this.title, required this.value, required this.icon, required this.boxwidth});
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         width: boxwidth,
         child: Center(
           child: Column(
@@ -23,11 +23,11 @@ class DashboardCard extends StatelessWidget {
               size: 50,
               color: Colors.red,
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Chivo',
                 fontSize: 15
               ),
@@ -35,7 +35,7 @@ class DashboardCard extends StatelessWidget {
             Text(
               value,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Chivo',
                   fontSize: 20,
                   fontWeight: FontWeight.bold

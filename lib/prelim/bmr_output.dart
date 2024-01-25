@@ -1,15 +1,13 @@
-
 import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class BmrOutput extends StatefulWidget {
   final String selectedLevel;
   final int calculatedBMR;
 
-  BmrOutput({
+  const BmrOutput({super.key,
     required this.selectedLevel,
     required this.calculatedBMR,
   });
@@ -72,7 +70,7 @@ class _BmrOutputState extends State<BmrOutput> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   const Text(
                     'Your custom plan is ready and you are',
                     style: TextStyle(
@@ -82,7 +80,7 @@ class _BmrOutputState extends State<BmrOutput> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   const Text(
                     'one step closer to your goal weight.',
                      style: TextStyle(
@@ -91,7 +89,7 @@ class _BmrOutputState extends State<BmrOutput> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   const Text(
                     'Your daily net goal is:',
                     style: TextStyle(
@@ -101,7 +99,7 @@ class _BmrOutputState extends State<BmrOutput> {
                   ),
                   Text(
                     '${widget.calculatedBMR} calories',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: Colors.red,
@@ -120,7 +118,7 @@ class _BmrOutputState extends State<BmrOutput> {
                   });
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {
-                    return TabBarViewMain();
+                    return const TabBarViewMain();
                   }),
                 );
               },

@@ -1,16 +1,17 @@
 import 'package:calorie_counter_app_design/firebase_options.dart';
 import 'package:calorie_counter_app_design/prelim/welcomepage.dart';
-import 'package:calorie_counter_app_design/tabview.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget{
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

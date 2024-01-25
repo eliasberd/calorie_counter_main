@@ -1,4 +1,3 @@
-import 'package:calorie_counter_app_design/food.dart';
 import 'package:calorie_counter_app_design/food_test.dart';
 import 'package:flutter/material.dart';
 
@@ -12,16 +11,16 @@ class DiaryHeader extends StatelessWidget{
     return Container(
         color: Colors.redAccent,
         height: 60,
-        margin: EdgeInsets.only(top: 5),
-        padding: EdgeInsets.only(left: 15, right: 10),
+        margin: const EdgeInsets.only(top: 5),
+        padding: const EdgeInsets.only(left: 15, right: 10),
         child:  Row(
             children: [
-              Padding(padding: EdgeInsets.only(left: 0),
+              Padding(padding: const EdgeInsets.only(left: 0),
                   child:
                   SizedBox(
                     width:225,
                     child: Text(meal,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 23,
                             color: Colors.white
@@ -30,8 +29,8 @@ class DiaryHeader extends StatelessWidget{
                   ),
 
               ),
-              Spacer(flex: 3),
-              Padding(padding: EdgeInsets.only(bottom:7),
+              const Spacer(flex: 3),
+              Padding(padding: const EdgeInsets.only(bottom:7),
                 child: IconButton(
                     color: Colors.white,
                     onPressed: (){
@@ -42,16 +41,16 @@ class DiaryHeader extends StatelessWidget{
 
                       ));
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.add,
                       size: 30,
                     ),
                 )
               ),
-              Spacer(flex: 6),
+              const Spacer(flex: 6),
               Text(
                 '$calorieValue',
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 23,
                     color: Colors.black
