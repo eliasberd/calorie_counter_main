@@ -187,24 +187,25 @@ class _Tab1State extends State<Tab1> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+    return Column(children: [
       Container(
           color: Colors.white,
           height: 75,
           width: 500,
           child: Container(
-              padding: EdgeInsets.only(left: 70, right: 25),
-              child: Row(children: <Widget>[
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Spacer(),
                 Text(
-                    'Daily Goal: ',
+                    'Daily Goal:',
                   style: TextStyle(
                     fontFamily: "Chivo",
                     fontSize: 30
                   ),
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                Spacer(),
+
                 StreamBuilder<String>(
                     stream: _dataController.stream,
                     builder: (context, snapshot){
@@ -218,7 +219,8 @@ class _Tab1State extends State<Tab1> {
 
                 ),
 
-                Spacer(),
+
+
                 Visibility(visible: !hasUpdated,
                     child:
                   IconButton(onPressed: (){
@@ -247,6 +249,8 @@ class _Tab1State extends State<Tab1> {
                       )
                   )
                 ),
+                    Spacer()
+
               ]
               )
           )
@@ -316,6 +320,9 @@ class _Tab1State extends State<Tab1> {
           fontSize: 20,
         ),
       )
+
+
+        ///////for testing///////
       ),
       // ElevatedButton(onPressed: (){
       //   print('----------------------------');
@@ -337,6 +344,8 @@ class _Tab1State extends State<Tab1> {
       // },
       //
       //     child: Text('test'))
+
+
         ],
       );
   }

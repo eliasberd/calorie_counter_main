@@ -71,7 +71,10 @@ class _Tab2State extends State<Tab2> {
 
   Widget buildInfoBox(String title, String value) {
     return Container(
-      width: 350,
+      constraints:BoxConstraints(
+        minWidth: 300,
+        maxWidth: 320
+      ),
       height: 100,
       margin: EdgeInsets.symmetric(vertical: 8.0),
       padding: EdgeInsets.all(16.0),
@@ -80,6 +83,7 @@ class _Tab2State extends State<Tab2> {
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
             title,
@@ -89,8 +93,6 @@ class _Tab2State extends State<Tab2> {
               color: Colors.white
             ),
           ),
-          Spacer(),
-          SizedBox(width: 100),
           Spacer(),
           Text(
             value,
