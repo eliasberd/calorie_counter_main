@@ -14,7 +14,7 @@ class ActivityLevelForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ActivityLevelForm> createState() => _ActivityLevelFormState();
+  _ActivityLevelFormState createState() => _ActivityLevelFormState();
 }
 
 class _ActivityLevelFormState extends State<ActivityLevelForm> {
@@ -38,7 +38,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
       appBar: AppBar(
         backgroundColor: Colors.red[400],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -51,7 +51,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 30, left: 30, right: 30),
-                child: const Text(
+                child: Text(
                   "Choose the category that best represents your average weekly activity level:",
                   style: TextStyle(
                     fontSize: 15.0,
@@ -61,7 +61,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 10, left: 30, right: 30),
+                margin: const EdgeInsets.only(top: 10, left: 30, right: 30),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
                   color: Colors.red[200],
@@ -83,8 +83,8 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                       .toList(),
                 ),
               ),
-              SizedBox(height: 40),
-              Container(
+              const SizedBox(height: 40),
+              SizedBox(
                 width: 340,
                 height: 50,
                 child: ElevatedButton(
@@ -114,7 +114,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red[400],
+                    backgroundColor: Colors.red[400],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),

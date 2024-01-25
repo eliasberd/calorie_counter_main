@@ -7,6 +7,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class Tab1 extends StatefulWidget {
+  const Tab1({super.key});
+
   @override
   State<Tab1> createState() => _Tab1State();
 }
@@ -26,7 +28,7 @@ class _Tab1State extends State<Tab1> {
   int dinnerVal = 0;
   int snackVal = 0;
   int userTotalCal = 0;
-  StreamController<String> _dataController = StreamController<String>();
+  final StreamController<String> _dataController = StreamController<String>();
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
   @override
@@ -62,15 +64,7 @@ class _Tab1State extends State<Tab1> {
     });
   }
 
-  // Future<void> fetchBMR() async{
-  //   FirebaseService firebaseService = FirebaseService();
-  //   String? calculatedBMRdata = await firebaseService.fetchCalcuCal();
-  //
-  //   setState(() {
-  //     calculatedBMR = calculatedBMRdata;
-  //   });
-  //
-  // }
+
 
   Future<void> fetchBreakfast() async{
     FirebaseService firebaseService = FirebaseService();
@@ -179,11 +173,6 @@ class _Tab1State extends State<Tab1> {
 
   }
 
-  // void writeData(){
-  //   databaseReference.child('user').child(currentUid).set({
-  //     "bmr" : "120"
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -192,25 +181,24 @@ class _Tab1State extends State<Tab1> {
           color: Colors.white,
           height: 75,
           width: 500,
-          child: Container(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Spacer(),
-                Text(
+                    const Spacer(),
+                const Text(
                     'Daily Goal:',
                   style: TextStyle(
                     fontFamily: "Chivo",
                     fontSize: 30
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
 
                 StreamBuilder<String>(
                     stream: _dataController.stream,
                     builder: (context, snapshot){
                       return Text('${snapshot.data}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 30
                       ),
@@ -218,8 +206,6 @@ class _Tab1State extends State<Tab1> {
                     }
 
                 ),
-
-
 
                 Visibility(visible: !hasUpdated,
                     child:
@@ -243,28 +229,27 @@ class _Tab1State extends State<Tab1> {
                       });
                     }
                     },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.restart_alt,
                         color: Colors.redAccent,
                       )
                   )
                 ),
-                    Spacer()
+                    const Spacer()
 
               ]
-              )
-          )
+              ),
       ),
       Column(children: <Widget>[
         DiaryHeader(meal: 'Breakfast', calorieValue: breakfastVal),
-        FoodList(meal: 'Breakfast')
+        const FoodList(meal: 'Breakfast')
       ]),
       Column(
         children: [
           Column(
             children: <Widget>[
               DiaryHeader(meal: 'Lunch', calorieValue: lunchVal),
-              FoodList(meal: 'Lunch')
+              const FoodList(meal: 'Lunch')
             ],
           )
         ],
@@ -273,16 +258,16 @@ class _Tab1State extends State<Tab1> {
       Column(
         children: <Widget>[
           DiaryHeader(meal: 'Dinner', calorieValue: dinnerVal),
-          FoodList(meal: 'Dinner')
+          const FoodList(meal: 'Dinner')
           ]
       ),
       Column(
         children: <Widget>[
           DiaryHeader(meal: 'Snack', calorieValue: snackVal),
-          FoodList(meal: 'Snack')
+          const FoodList(meal: 'Snack')
             ],
           ),
-      SizedBox(height: 30,),
+      const SizedBox(height: 30,),
       ElevatedButton(
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(150, 50)),
@@ -297,9 +282,7 @@ class _Tab1State extends State<Tab1> {
           'varBmr':cal
         });
 
-        databaseReference.child('addedFood').child(currentUid).remove().then((_){
-          print('Remove objects');
-        });
+        databaseReference.child('addedFood').child(currentUid).remove();
 
         setState(() {
           hasUpdated = false;
@@ -312,7 +295,7 @@ class _Tab1State extends State<Tab1> {
         });
 
 
-      }, child: Text(
+      }, child: const Text(
           'Reset Day',
         style: TextStyle(
           fontFamily: 'Poppins',
@@ -320,21 +303,7 @@ class _Tab1State extends State<Tab1> {
         ),
       )
 
-
-        ///////for testing///////
       ),
-
-      ElevatedButton(onPressed: (){
-        print('----------------------------');
-        print(cal);
-
-
-        print('----------------------------');
-
-      },
-
-          child: Text('test'))
-
 
         ],
       );

@@ -4,6 +4,8 @@ import 'signup.dart';
 
 
 class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(onWillPop: () async{
@@ -21,7 +23,7 @@ class WelcomePage extends StatelessWidget {
               top: 0,
               child: CustomPaint(
                 painter: TrianglePainter(),
-                child: Container(
+                child: const SizedBox(
                   height: 300,
                   width: 300,
                 ),
@@ -34,7 +36,7 @@ class WelcomePage extends StatelessWidget {
                 angle: 3.14 / 2,
                 child: CustomPaint(
                   painter: TrianglePainter(),
-                  child: Container(
+                  child: const SizedBox(
                     height: 300,
                     width: 300,
                   ),
@@ -42,7 +44,7 @@ class WelcomePage extends StatelessWidget {
               ),
             ),
             Container(
-              alignment: Alignment(0, -0.3),
+              alignment: const Alignment(0, -0.3),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -52,8 +54,8 @@ class WelcomePage extends StatelessWidget {
                     height: 240,
                     fit: BoxFit.fill,
                   ),
-                  SizedBox(height: 10),
-                  Padding(
+                  const SizedBox(height: 10),
+                  const Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
                       'Counting Calories, Achieving Wellness.\nWelcome to Calorie Check!',
@@ -66,15 +68,15 @@ class WelcomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPage()));
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(200, 40),
+                      minimumSize: const Size(200, 40),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Login',
                       style: TextStyle(
                         color: Colors.white,
@@ -84,16 +86,16 @@ class WelcomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Signup()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Signup()));
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(200, 40),
+                      minimumSize: const Size(200, 40),
                     ),
-                    child: Text(
-                      'Signup',
+                    child: const Text(
+                      'Sign Up',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

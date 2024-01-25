@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'diary.dart';
 
 class TabBarViewMain extends StatefulWidget {
+  const TabBarViewMain({super.key});
+
   @override
-  _TabBarViewMainState createState() => _TabBarViewMainState();
+  State<TabBarViewMain> createState() => _TabBarViewMainState();
 }
 
 class _TabBarViewMainState extends State<TabBarViewMain> {
@@ -14,8 +16,8 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
   final List<String> tabTitle = ["Diary", "Dashboard"];
 
   final List<Widget> _tabs = [
-    Tab1(),
-    Tab2(),
+    const Tab1(),
+    const Tab2(),
   ];
 
   void _onTabTapped(int index) {
@@ -30,25 +32,29 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Logout'),
-          content: Text('Are you sure you want to log out?'),
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to log out?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 // User pressed "Cancel"
                 Navigator.of(context).pop(false);
               },
+<<<<<<< HEAD
               child: Text(
                 'Cancel',
                 style: TextStyle(color: Colors.grey),
               ),
+=======
+              child: const Text('Cancel'),
+>>>>>>> ecf841845b88ab3b7345fc8a55b06eeb4e300f0e
             ),
             TextButton(
               onPressed: () {
                 // User pressed "Log Out"
                 Navigator.of(context).pop(true);
               },
-              child: Text('Log Out'),
+              child: const Text('Log Out'),
             ),
           ],
         );
@@ -77,13 +83,13 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
             elevation: 0,
             backgroundColor: Colors.redAccent,
             title: Text(tabTitle[_currentIndex],
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 28,
                 )),
             actions: [
               IconButton(
-                icon: Icon(Icons.logout),
+                icon: const Icon(Icons.logout),
                 onPressed: _signOut,
               ),
             ],
@@ -94,7 +100,7 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: _onTabTapped,
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.book,

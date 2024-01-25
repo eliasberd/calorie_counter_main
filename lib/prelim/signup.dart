@@ -14,7 +14,6 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final FirebaseAuthService _auth = FirebaseAuthService();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _usernameController = TextEditingController();
@@ -85,7 +84,6 @@ class _SignupState extends State<Signup> {
 
     // If user is not null, the signup was successful
     if (user != null) {
-      print("User account successfully created.");
       // Navigate to the next step in the registration process
       // Navigate to the PersonalInfoForm and pass user information
       // ignore: use_build_context_synchronously
@@ -122,7 +120,7 @@ class _SignupState extends State<Signup> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -137,7 +135,7 @@ class _SignupState extends State<Signup> {
       appBar: AppBar(
         backgroundColor: Colors.red[400],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -147,9 +145,9 @@ class _SignupState extends State<Signup> {
         child: Form(
           key: _formKey,
           child: Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: Padding(
-              padding: EdgeInsets.all(30),
+              padding: const EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -181,7 +179,7 @@ class _SignupState extends State<Signup> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email, color: Colors.red[200]),
                       labelText: 'Email Address',
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
@@ -200,7 +198,7 @@ class _SignupState extends State<Signup> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person, color: Colors.red[200]),
                       labelText: 'Username',
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
@@ -219,7 +217,7 @@ class _SignupState extends State<Signup> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock, color: Colors.red[200]),
                       labelText: 'Password',
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
                       // Add suffixIcon for eye icon
@@ -253,7 +251,7 @@ class _SignupState extends State<Signup> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock, color: Colors.red[200]),
                       labelText: 'Confirm Password',
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
                       // Add suffixIcon for eye icon
@@ -311,7 +309,7 @@ class _SignupState extends State<Signup> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginPage(),
+                                builder: (context) => const LoginPage(),
                               ),
                             );
                           },

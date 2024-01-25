@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 
 class FoodList extends StatefulWidget{
+  final String meal;
+  const FoodList({super.key, required this.meal});
+
   @override
-  String meal;
-  FoodList({required this.meal});
   State<FoodList> createState() => FoodListState();
 
 }
@@ -19,30 +20,28 @@ class FoodListState extends State<FoodList>{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: FirebaseAnimatedList(
+    return FirebaseAnimatedList(
         query: databaseReference.child('addedFood').child(currentUid).child(widget.meal),
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, snapshot, index, animation){
           return ListTile(
             title: Text(
               snapshot.child('food').value.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Poppins',
                   fontSize: 20
               ),
             ),
             trailing: Text(
                 snapshot.child('cal').value.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'Chivo',
                   fontSize: 20
               ),
             ),
           );
         }
-    )
     );
 
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AddFoodTest extends StatefulWidget {
   final String meal;
-  AddFoodTest({required this.meal});
+  const AddFoodTest({super.key, required this.meal});
 
   @override
   State<AddFoodTest> createState() => _AddFoodTestState();
@@ -56,7 +56,7 @@ class _AddFoodTestState extends State<AddFoodTest> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.redAccent,
-        title: Text(
+        title: const Text(
             'Add Food',
           style: TextStyle(
             fontFamily: "Poppins",
@@ -64,14 +64,14 @@ class _AddFoodTestState extends State<AddFoodTest> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             onPressed: () {
               // Add checked items to Firebase Realtime Database
               addCheckedItemsToFirebase();
@@ -89,12 +89,12 @@ class _AddFoodTestState extends State<AddFoodTest> {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Search food...',
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                   ),
                   onChanged: (value) {
                     // Filter the food items based on the search value
@@ -117,23 +117,23 @@ class _AddFoodTestState extends State<AddFoodTest> {
                         // You can add custom logic or navigation
                       },
                       child: Card(
-                        color: Color(0xFFD3D3D3), // Set the color to #D3D3D3
+                        color: const Color(0xFFD3D3D3), // Set the color to #D3D3D3
                         elevation: 5.0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        margin: EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.all(8.0),
                         child: ListTile(
                           title: Text(
                             filteredFoodItems[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black, // Set the color of the text
                               fontWeight: FontWeight.bold, // Set the text to bold
                             ),
                           ),
                           subtitle: Text(
                             '$valuesTxt',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black, // Set the color of the values text
                               fontWeight: FontWeight.bold, // Set the text to bold
                             ),
@@ -159,7 +159,7 @@ class _AddFoodTestState extends State<AddFoodTest> {
             bottom: 0,
             child: CustomPaint(
               painter: TrianglePainter(isReversed: true),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
               ),
@@ -170,7 +170,7 @@ class _AddFoodTestState extends State<AddFoodTest> {
             bottom: 0,
             child: CustomPaint(
               painter: TrianglePainter(),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
               ),
@@ -202,11 +202,11 @@ class TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..shader = LinearGradient(
+      ..shader = const LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: [Color(0xFFFF5959), Color(0xFFFF2E63)],
-      ).createShader(Rect.fromPoints(Offset(0, 0), Offset(size.width, 0)));
+      ).createShader(Rect.fromPoints(const Offset(0, 0), Offset(size.width, 0)));
 
     final Path path = Path();
     if (isReversed) {

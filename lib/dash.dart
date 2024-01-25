@@ -6,13 +6,15 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class Tab2 extends StatefulWidget {
+  const Tab2({super.key});
+
   @override
-  _Tab2State createState() => _Tab2State();
+  State<Tab2> createState() => _Tab2State();
 }
 
 class _Tab2State extends State<Tab2> {
   Map<String, dynamic> userData = {};
-  DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
   String currentUid = "";
 
   TextEditingController bmrUpdate = TextEditingController();
@@ -38,7 +40,7 @@ class _Tab2State extends State<Tab2> {
       return;
     }
 
-    //Firestore
+    //FirebaseFirestore
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
@@ -52,7 +54,7 @@ class _Tab2State extends State<Tab2> {
 
     //realtime
     DatabaseReference databaseReference =
-        FirebaseDatabase.instance.reference().child('user').child(user.uid);
+        FirebaseDatabase.instance.ref().child('user').child(user.uid);
 
     try {
       DataSnapshot dataSnapshot = await databaseReference.child('bmr').get();
@@ -68,7 +70,6 @@ class _Tab2State extends State<Tab2> {
 
         } catch(e){
           print("Error parse");
-          return null;
         }
 
 
@@ -82,14 +83,14 @@ class _Tab2State extends State<Tab2> {
 
   Widget buildInfoBox(String title, String value) {
     return Container(
-      constraints:BoxConstraints(
+      constraints:const BoxConstraints(
         minWidth: 300,
         maxWidth: 320
       ),
       height: 100,
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(16.0),
+      decoration: const BoxDecoration(
         color: Colors.redAccent,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
@@ -98,13 +99,13 @@ class _Tab2State extends State<Tab2> {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20, fontFamily: 'Poppins', color: Colors.white),
           ),
-          Spacer(),
+          const Spacer(),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20, fontFamily: 'Chivo', color: Colors.white),
           ),
         ],
@@ -134,8 +135,8 @@ class _Tab2State extends State<Tab2> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Welcome $firstname !',
-                      style: TextStyle(
+                      'Welcome $firstname!',
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 25,
                       ),
@@ -144,22 +145,22 @@ class _Tab2State extends State<Tab2> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         DashboardCard(
                           title: 'Your BMR',
                           value: '$bmr',
                           icon: Icons.monitor_heart,
                           boxwidth: 200,
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
                         style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(Size(110, 50)),
+                          minimumSize: MaterialStateProperty.all(const Size(110, 50)),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
@@ -171,7 +172,7 @@ class _Tab2State extends State<Tab2> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: Text('Edit BMR'),
+                                  title: const Text('Edit BMR'),
                                   content: TextField(
                                     keyboardType: TextInputType.number,
                                     controller: bmrUpdate,
@@ -182,9 +183,8 @@ class _Tab2State extends State<Tab2> {
                                     TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
-                                          print('Success');
                                         },
-                                        child: Text('Close')),
+                                        child: const Text('Close')),
                                     TextButton(
                                         onPressed: () {
                                           String text = bmrUpdate.text;
@@ -209,13 +209,13 @@ class _Tab2State extends State<Tab2> {
 
                                           print('Success');
                                         },
-                                        child: Text('Update')
+                                        child: const Text('Update')
                                     )
                                   ],
                                 );
                               });
                         },
-                        child: Text(
+                        child: const Text(
                           'Edit',
                           style: TextStyle(fontFamily: 'Poppins', fontSize: 20),
                         ))
@@ -223,7 +223,7 @@ class _Tab2State extends State<Tab2> {
                 ),
               ),
             ])),
-        Text(
+        const Text(
           'Personal Details',
           style: TextStyle(
             fontFamily: 'Poppins',
@@ -236,10 +236,6 @@ class _Tab2State extends State<Tab2> {
         buildInfoBox('Username', username),
         buildInfoBox('Height', height.toString()),
         buildInfoBox('Weight', weight.toString()),
-        ElevatedButton(onPressed: (){
-          print(bmr);
-
-        }, child: Text('test'))
       ],
     );
   }

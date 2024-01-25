@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 
 class FirebaseService {
-  final DatabaseReference _database = FirebaseDatabase.instance.reference();
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   
 
@@ -17,11 +17,11 @@ class FirebaseService {
         int intValue = int.parse(cal);
         return intValue;
       } catch(e){
-        print('Error');
         return null;
       }
 
     }
+    return null;
 
   }
 

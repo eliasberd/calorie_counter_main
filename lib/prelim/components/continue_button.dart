@@ -15,7 +15,7 @@ class ContinueButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             primary: Colors.red[500],
-            minimumSize: Size(128, 30), // Set button width and height
+            minimumSize: const Size(128, 30), // Set button width and height
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25.0), // Set border radius
             ),
@@ -23,10 +23,10 @@ class ContinueButton extends StatelessWidget {
           child: Container(
             width: 120, // Set button width
             height: 50,
-            padding: EdgeInsets.all(10),
-            child: Center(
+            padding: const EdgeInsets.all(10),
+            child: const Center(
               child: Text(
-                'Continue',
+                'CONTINUE',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w600,

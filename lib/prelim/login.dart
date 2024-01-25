@@ -7,7 +7,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -42,13 +42,13 @@ class _LoginPageState extends State<LoginPage> {
         child: Form(
           key: _formKey,
           child: Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: Padding(
-              padding: EdgeInsets.all(30),
+              padding: const EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Center(
+                  const Center(
                     child: Text(
                       'Login',
                       style: TextStyle(
@@ -58,13 +58,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email, color: Colors.red[200]),
                       labelText: 'Email Address',
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person, color: Colors.red[200]),
                       labelText: 'Username',
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock, color: Colors.red[200]),
                       labelText: 'Password',
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
                       suffixIcon: IconButton(
@@ -128,23 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     obscureText: !isPasswordVisible,
                   ),
-                  SizedBox(height: 10),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        // Add the code for forgot password action here
-                      },
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w200,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -167,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TabBarViewMain(),
+                                builder: (context) => const TabBarViewMain(),
                               ),
                             );
                           } else {
@@ -183,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text(
+                                title: const Text(
                                   'Login Failed',
                                   style: TextStyle(
                                     color: Colors.red,
@@ -196,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               );
@@ -207,12 +191,12 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red[500],
-                      minimumSize: Size(128, 30),
+                      minimumSize: const Size(128, 30),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
-                    child: Container(
+                    child: const SizedBox(
                       width: 120,
                       height: 50,
                       child: Center(
@@ -226,13 +210,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Don't have an Account? ",
+                        const Text(
+                          "Don't have an Account?  ",
                           style: TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.w100,
@@ -242,8 +226,8 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: () {
                             _navigateToSignUp(context);
                           },
-                          child: Text(
-                            "SignUp.",
+                          child: const Text(
+                            "Sign up.",
                             style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w200,
