@@ -312,7 +312,6 @@ class _Tab1State extends State<Tab1> {
         });
 
 
-
       }, child: Text(
           'Reset Day',
         style: TextStyle(

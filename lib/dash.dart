@@ -39,8 +39,10 @@ class _Tab2State extends State<Tab2> {
     }
 
     //Firestore
-    DocumentSnapshot snapshot =
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
 
     if (snapshot.exists) {
       setState(() {
@@ -50,7 +52,7 @@ class _Tab2State extends State<Tab2> {
 
     //realtime
     DatabaseReference databaseReference =
-    FirebaseDatabase.instance.reference().child('user').child(user.uid);
+        FirebaseDatabase.instance.reference().child('user').child(user.uid);
 
     try {
       DataSnapshot dataSnapshot = await databaseReference.child('bmr').get();
@@ -88,25 +90,19 @@ class _Tab2State extends State<Tab2> {
           Text(
             title,
             style: TextStyle(
-                fontSize: 20,
-              fontFamily: 'Poppins',
-              color: Colors.white
-            ),
+                fontSize: 20, fontFamily: 'Poppins', color: Colors.white),
           ),
           Spacer(),
           Text(
             value,
             style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'Chivo',
-              color: Colors.white
-
-            ),
+                fontSize: 20, fontFamily: 'Chivo', color: Colors.white),
           ),
         ],
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     String firstname = userData['firstname'] ?? 'N/A';
@@ -116,113 +112,107 @@ class _Tab2State extends State<Tab2> {
     int weight = userData['weight'] ?? 0;
     String bmr = userData['bmr'] ?? 'N/A';
 
-
     // Build the UI
     return Column(
       children: [
-    Center(
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Welcome $firstname !',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 25,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        Center(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Spacer(),
-                  DashboardCard(
-                    title: 'Your BMR',
-                    value: '$bmr',
-                    icon: Icons.monitor_heart,
-                    boxwidth: 200,
-                  ),
-                  Spacer(),
-                ],
-              ),
-              SizedBox(height: 10,),
-              ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(Size(110, 50)),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Welcome $firstname !',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 25,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  onPressed: (){
-                    showDialog(
-                        context: context,
-                        builder: (context){
-                          return AlertDialog(
-                            title: Text('Edit BMR'),
-                            content: TextField(
-                              keyboardType: TextInputType.number,
-                              controller: bmrUpdate,
-                              decoration: InputDecoration(
-                                hintText: '$bmr'
-                              ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Spacer(),
+                        DashboardCard(
+                          title: 'Your BMR',
+                          value: '$bmr',
+                          icon: Icons.monitor_heart,
+                          boxwidth: 200,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(Size(110, 50)),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            actions: <Widget>[
-                              TextButton(onPressed: (){
-                                Navigator.of(context).pop();
-                                print('Success');
-                              }, child: Text(
-                                  'Close'
-                              )
-                              ),
+                          ),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Edit BMR'),
+                                  content: TextField(
+                                    keyboardType: TextInputType.number,
+                                    controller: bmrUpdate,
+                                    decoration:
+                                        InputDecoration(hintText: '$bmr'),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          print('Success');
+                                        },
+                                        child: Text('Close')),
+                                    TextButton(
+                                        onPressed: () {
+                                          String text = bmrUpdate.text;
+                                          try {
+                                            int newBmr = int.parse(text);
+                                            _databaseReference
+                                                .child('user')
+                                                .child(currentUid)
+                                                .update({
+                                              'bmr': newBmr,
+                                              'varBmr': newBmr
+                                            });
+                                          } catch (e) {
+                                            print('Error parsing');
+                                          }
 
-                              TextButton(onPressed: (){
-                                String text = bmrUpdate.text;
-                                try{
-                                  int newBmr = int.parse(text);
-                                  _databaseReference.child('user').child(currentUid).update({
-                                    'bmr' : newBmr,
-                                    'varBmr' : newBmr
-                                  });
-                                }catch(e){
-                                  print('Error parsing');
-                                }
+                                          setState(() {
+                                            _getUserData();
+                                          });
+                                          bmrUpdate.clear();
+                                          Navigator.of(context).pop();
 
-                                setState(() {
-                                  _getUserData();
-                                });
-                                bmrUpdate.clear();
-                                Navigator.of(context).pop();
-
-                                print('Success');
-
-                              }, child: Text('Update'))
-                            ],
-
-                          );
-                        });
-
-                  },
-                  child: Text(
-                      'Edit',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 20
-                    ),
-                  )
-              )
-            ],
-          ),
-        ),
-        ]
-        )
-        ),
+                                          print('Success');
+                                        },
+                                        child: Text('Update'))
+                                  ],
+                                );
+                              });
+                        },
+                        child: Text(
+                          'Edit',
+                          style: TextStyle(fontFamily: 'Poppins', fontSize: 20),
+                        ))
+                  ],
+                ),
+              ),
+            ])),
         Text(
           'Personal Details',
           style: TextStyle(
@@ -237,9 +227,6 @@ class _Tab2State extends State<Tab2> {
         buildInfoBox('Height', height.toString()),
         buildInfoBox('Weight', weight.toString()),
       ],
-
-
     );
-
   }
 }
