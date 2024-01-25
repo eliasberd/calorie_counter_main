@@ -38,7 +38,10 @@ class _TabBarViewMainState extends State<TabBarViewMain> {
                 // User pressed "Cancel"
                 Navigator.of(context).pop(false);
               },
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
             TextButton(
               onPressed: () {

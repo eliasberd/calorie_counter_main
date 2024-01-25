@@ -22,18 +22,18 @@ class PersonalInfoForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PersonalInfoFormState createState() => _PersonalInfoFormState();
+  State<PersonalInfoForm> createState() => _PersonalInfoFormState();
 }
 
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _suffixController = TextEditingController();
-  TextEditingController _heightController = TextEditingController();
-  TextEditingController _weightController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _suffixController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
 
   String sex = '';
 
@@ -45,8 +45,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(
-                context); // Navigate back to the previous screen (Signup)
+            Navigator.pop(context);
           },
         ),
       ),
@@ -60,7 +59,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Fill up your personal information',
                     style: TextStyle(
                       fontSize: 15.0,

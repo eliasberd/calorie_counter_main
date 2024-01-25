@@ -1,5 +1,4 @@
 import 'package:calorie_counter_app_design/prelim/login.dart';
-
 import 'personal_info_form.dart';
 import 'user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'components/continue_button.dart';
 
 class Signup extends StatefulWidget {
-  Signup({super.key});
+  const Signup({super.key});
 
   @override
   State<Signup> createState() => _SignupState();
@@ -18,10 +17,11 @@ class _SignupState extends State<Signup> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   String email = '';
 
@@ -58,20 +58,20 @@ class _SignupState extends State<Signup> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(
+            title: const Text(
               'Sign Up Failed',
               style: TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            content: Text('Passwords do not match. Please check again.'),
+            content: const Text('Passwords do not match. Please check again.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -88,6 +88,7 @@ class _SignupState extends State<Signup> {
       print("User account successfully created.");
       // Navigate to the next step in the registration process
       // Navigate to the PersonalInfoForm and pass user information
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -102,18 +103,19 @@ class _SignupState extends State<Signup> {
       );
     } else {
       // Display the error message in a dialog
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(
+            title: const Text(
               'Sign Up Failed',
               style: TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            content: Text(
+            content: const Text(
                 ' The email address is already in use by another account.'),
             actions: <Widget>[
               TextButton(
@@ -151,7 +153,7 @@ class _SignupState extends State<Signup> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Center(
+                  const Center(
                     child: Text(
                       'Sign Up',
                       style: TextStyle(
@@ -161,8 +163,8 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 50),
-                  Center(
+                  const SizedBox(height: 50),
+                  const Center(
                     child: Text(
                       'Enter your credentials to continue',
                       style: TextStyle(
@@ -172,7 +174,7 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
@@ -283,7 +285,7 @@ class _SignupState extends State<Signup> {
                     },
                     obscureText: !isConfirmPasswordVisible,
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   ContinueButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -292,12 +294,12 @@ class _SignupState extends State<Signup> {
                       }
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Already have an account? ",
                           style: TextStyle(
                             fontSize: 15.0,
@@ -313,7 +315,7 @@ class _SignupState extends State<Signup> {
                               ),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             "Log In",
                             style: TextStyle(
                               fontSize: 15.0,

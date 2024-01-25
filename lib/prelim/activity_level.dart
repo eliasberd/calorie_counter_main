@@ -14,7 +14,7 @@ class ActivityLevelForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ActivityLevelFormState createState() => _ActivityLevelFormState();
+  State<ActivityLevelForm> createState() => _ActivityLevelFormState();
 }
 
 class _ActivityLevelFormState extends State<ActivityLevelForm> {
@@ -51,7 +51,7 @@ class _ActivityLevelFormState extends State<ActivityLevelForm> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 30, left: 30, right: 30),
-                child: Text(
+                child: const Text(
                   "Choose the category that best represents your average weekly activity level:",
                   style: TextStyle(
                     fontSize: 15.0,
