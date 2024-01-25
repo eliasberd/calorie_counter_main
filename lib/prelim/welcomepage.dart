@@ -6,7 +6,10 @@ import 'signup.dart';
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(onWillPop: () async{
+      return false;
+    },
+    child: Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -105,6 +108,7 @@ class WelcomePage extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 }
