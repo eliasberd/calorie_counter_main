@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:calorie_counter_app_design/dash_elements/dashcard.dart';
 import 'package:calorie_counter_app_design/prelim/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
+import 'camera_elements/camera.dart';
 
 class Tab2 extends StatefulWidget {
   const Tab2({super.key});
@@ -15,8 +18,10 @@ class Tab2 extends StatefulWidget {
 class _Tab2State extends State<Tab2> {
   Map<String, dynamic> userData = {};
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  // String _profilePicturePath = 'C:/Users/espaj/AndroidProject/calorie_counter_app/assets/initial_profile_picture_path.jpg';
+  String _profilePicturePath = 'assets/initial_profile_picture_path.jpg';
   String currentUid = "";
-
+  dynamic profilePic = '';
   TextEditingController bmrUpdate = TextEditingController();
 
   @override
@@ -24,6 +29,24 @@ class _Tab2State extends State<Tab2> {
     super.initState();
     _getUserData();
     setUid();
+    setProfPic();
+  }
+  void setProfPic() {
+    if(_profilePicturePath == 'assets/initial_profile_picture_path.jpg') {
+      setState(() {
+        profilePic = const AssetImage('assets/initial_profile_picture_path.jpg');
+      });
+    } else{
+      setState(() {
+        profilePic = FileImage(File(_profilePicturePath));
+      });
+    }
+  }
+
+  void updateProfilePicture(String newImagePath) {
+    setState(() {
+      _profilePicturePath = newImagePath;
+    });
   }
 
   void setUid() {
@@ -223,6 +246,11 @@ class _Tab2State extends State<Tab2> {
                 ),
               ),
             ])),
+
+        CircleAvatar(
+          radius: 100,
+          backgroundImage: profilePic,
+        ),
         const Text(
           'Personal Details',
           style: TextStyle(
@@ -236,6 +264,18 @@ class _Tab2State extends State<Tab2> {
         buildInfoBox('Username', username),
         buildInfoBox('Height', height.toString()),
         buildInfoBox('Weight', weight.toString()),
+        
+        ElevatedButton(onPressed: () async {
+          await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => CameraScreen(onPhotoTaken: updateProfilePicture,))
+          );
+          setProfPic();
+
+        }, child: Text('Test Camera')
+        ),
+        ElevatedButton(onPressed: (){
+          print(_profilePicturePath);
+        }, child: Text('test'))
       ],
     );
   }

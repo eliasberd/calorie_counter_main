@@ -41,6 +41,11 @@ dependencies:
   cloud_firestore: ^4.14.0
 
   intl: ^0.17.0
+  camera: ^0.10.5+9
+  image_picker: ^1.0.7
+  image_cropper: ^5.0.1
+  path_provider: ^2.1.2
+  google_mlkit_text_recognition: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +65,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

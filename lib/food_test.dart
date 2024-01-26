@@ -228,4 +228,3 @@ class TrianglePainter extends CustomPainter {
     return false;
   }
 }
-
